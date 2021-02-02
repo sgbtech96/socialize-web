@@ -35,7 +35,7 @@
     }
   },
   "lint-staged": {
-    "*.+(js|jsx)": "eslint --fix src/components",
+    "*.+(js|jsx)": "eslint --fix",
     "*.+(json|css|md)": "prettier --write"
   },
   "eslintConfig": {
