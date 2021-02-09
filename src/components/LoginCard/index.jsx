@@ -1,68 +1,48 @@
 import React from "react";
-// import PropTypes from "prop-types";
-import styled from "styled-components";
-import { Col, Button, Form, Input } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import PropTypes from "prop-types";
+import { Button, Form, Input } from "antd";
+import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
+import { Wrapper } from "./style";
 
-const Wrapper = styled(Col)`
-  background-color: #fff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  border-radius: 4px;
-  padding: 30px 50px;
-  .fade {
-    color: var(--black-45);
-  }
-  .ant-input-affix-wrapper {
-    color: #9c9c9c;
-    background-color: #f5f7fa;
-    border-radius: 200px;
-    border: none;
-    padding: 10px;
-    margin-top: 10px;
-  }
-  .ant-input {
-    color: #9c9c9c;
-    background-color: #f5f7fa;
-  }
-  .ant-form-item-has-error .ant-input-affix-wrapper {
-    background-color: #f5f7fa;
-  }
-  .ant-form-item-has-error .ant-input {
-    background-color: #f5f7fa;
-  }
-  .ant-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--primary-blue);
-    width: 100%;
-    border-radius: 200px;
-    padding: 20px;
-    margin-top: 20px;
-  }
-  .link {
-    color: var(--primary-blue);
-    cursor: pointer;
-  }
-`;
-const LoginCard = () => {
+const LoginCard = ({ type }) => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
   return (
     <Wrapper align="middle">
       <div className="bold-36">Forny</div>
-      <div className="medium-24 mt-20">Login into account</div>
+      <div className="medium-24 mt-20">
+        {type === "login" ? "Login into account" : "Setup your account"}
+      </div>
       <div className="normal-18 mt-10 fade">
-        Use your credentials to access your account
+        {type === "login"
+          ? "Use your credentials to access your account"
+          : "Generate credentials for yourself"}
       </div>
       <Form onFinish={onFinish}>
+        {type === "register" && (
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email!",
+              },
+            ]}
+          >
+            <Input
+              prefix={<MailOutlined />}
+              type="email"
+              placeholder="Email address"
+            />
+          </Form.Item>
+        )}
         <Form.Item
           name="handle"
           rules={[
             {
               required: true,
-              message: "Please input your handle!",
+              message: "Please input a handle!",
             },
           ]}
         >
@@ -73,25 +53,59 @@ const LoginCard = () => {
           rules={[
             {
               required: true,
-              message: "Please input your password!",
+              message: "Please input a password!",
             },
           ]}
         >
           <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
         </Form.Item>
+        {type === "register" && (
+          <Form.Item
+            name="confirmPassword"
+            dependencies={["password"]}
+            rules={[
+              {
+                required: true,
+                message: "Confirm password!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+
+                  return Promise.reject(
+                    "The two passwords that you entered do not match!"
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined />}
+              type="password"
+              placeholder="Confirm password"
+            />
+          </Form.Item>
+        )}
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            <div className="medium-18">Log in</div>
+            <div className="medium-18">
+              {type === "login" ? "Log in" : "Register"}
+            </div>
           </Button>
         </Form.Item>
       </Form>
       <div className="normal-15 mt-20">
-        Don&apos;t have an account? <span className="link">Register here</span>
+        {type === "login" ? `Don't have an account?` : "Already have an account?"}{" "}
+        <span className="link">{type === "login" ? "Register here" : "Login"}</span>
       </div>
     </Wrapper>
   );
 };
 
-LoginCard.propTypes = {};
+LoginCard.propTypes = {
+  type: PropTypes.string,
+};
 
 export default LoginCard;
