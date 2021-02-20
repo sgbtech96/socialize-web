@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Row, Col } from "antd";
+import { Row, Col, message } from "antd";
+import Icon from "react-icons-kit";
+import { userPlus } from "react-icons-kit/feather/userPlus";
+import { checkCircleO } from "react-icons-kit/fa/checkCircleO";
+import Emitter from "../../utils/emitter";
 
 const Wrapper = styled(Row)`
   cursor: pointer;
   padding: 10px 20px;
-  max-width: 370px;
+  max-width: 400px;
   border-bottom: 1px solid var(--grey);
   :hover {
     background-color: var(--blue-subtle);
@@ -59,24 +63,65 @@ const Wrapper = styled(Row)`
       background-color: var(--grey);
     }
   }
+  .green-check {
+    color: var(--green);
+  }
+  .pointer {
+    cursor: pointer;
+  }
 `;
 
-const UserCard = () => {
+const UserCard = ({
+  socket,
+  user: { handle, name, imageUrl, tagline },
+  isFriend,
+}) => {
+  const [isInviteSent, setIsInviteSent] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  const handleInviteSend = () => {
+    socket.emit("SEND_INVITE", handle);
+    setIsInviteSent(true);
+  };
+
+  useEffect(() => {
+    Emitter.on("INCREMENT_UNREAD_COUNT", (userHandle) => {
+      if (handle === userHandle) setUnreadCount((prevState) => prevState + 1);
+    });
+    Emitter.on("RESET_UNREAD_COUNT", (userHandle) => {
+      if (handle === userHandle) setUnreadCount(0);
+    });
+    return () => {
+      Emitter.off("INCREMENT_UNREAD_COUNT");
+      Emitter.off("RESET_UNREAD_COUNT");
+    };
+  }, []);
+
   return (
     <Wrapper align="middle" gutter={8}>
       <Col span={5} className="avatar">
-        <img src="/user-avatar.jpg" />
+        <img src={imageUrl} />
         <span className="dot dot-active"></span>
       </Col>
       <Col span={12}>
-        <div className="bold-15 light-black">Jony Lynetin</div>
-        <div className="medium-12 fade tc-1 mt-5">I need job, please help me..</div>
+        <div className="bold-15 light-black">{name}</div>
+        <div className="medium-12 fade tc-1 mt-5">{tagline}</div>
       </Col>
       <Col span={7} align="end">
-        <div className="medium-12 fade mb-10">30/11/19</div>
-        <span className="medium-12 unread-box">
-          <span className="unread-count medium-10">2</span>
-        </span>
+        {isFriend && unreadCount > 0 ? (
+          <span className="medium-12 unread-box">
+            <span className="unread-count medium-10">{unreadCount}</span>
+          </span>
+        ) : isInviteSent ? (
+          <Icon icon={checkCircleO} size={12} className="pointer green-check" />
+        ) : (
+          <Icon
+            icon={userPlus}
+            size={12}
+            onClick={handleInviteSend}
+            className="pointer"
+          />
+        )}
       </Col>
     </Wrapper>
   );

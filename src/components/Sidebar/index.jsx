@@ -5,17 +5,17 @@ import { grid } from "react-icons-kit/feather/grid";
 import { iosSearchStrong } from "react-icons-kit/ionicons/iosSearchStrong";
 import styled from "styled-components";
 import { Row, Col } from "antd";
+import Header from "../Header";
 import TrendingSwipe from "../TrendingSwipe";
 import SearchBar from "../SearchBar";
 import SwitchButton from "../SwitchButton";
-import UserCard from "../UserCard";
+import UserList from "../UsersList";
 
-let samples = [1, 2, 3, 4, 5, 6, 7];
 const Wrapper = styled(Col)`
   background-color: var(--white);
   padding: 40px;
   @media screen and (max-width: 400px) {
-    padding: 20px 10px;
+    padding: 20px;
   }
   .light-black {
     color: var(--black-85);
@@ -31,11 +31,18 @@ const Wrapper = styled(Col)`
     background-color: var(--grey);
     border-radius: 200px;
   }
+  .hide {
+    display: none;
+  }
 `;
-const Sidebar = () => {
+
+const Sidebar = ({ socket, setActiveChannelId }) => {
   const [showSearch, setShowSearch] = useState(false);
+  const [activeTab, setActiveTab] = useState(2);
+
   return (
     <Wrapper>
+      <Header />
       <Row align="middle" gutter={4}>
         <Col span={20}>
           <div className="extra-bold-24 light-black">Trending</div>
@@ -45,11 +52,9 @@ const Sidebar = () => {
           <Icon icon={grid} size={20} className="grid-icon pointer" />
         </Col>
       </Row>
-
       <Col className="mt-20" span={24}>
         <TrendingSwipe />
       </Col>
-
       {showSearch ? (
         <Col className="mt-20" span={24}>
           <SearchBar setShowSearch={setShowSearch} />
@@ -70,22 +75,19 @@ const Sidebar = () => {
           </Col>
         </Row>
       )}
-
       <Row className="mt-20" justify="center" gutter={12}>
-        <Col span={8}>
+        <Col span={8} onClick={() => setActiveTab(1)}>
           <SwitchButton type="active" text="Direct" />
         </Col>
-        <Col span={8}>
+        <Col span={8} onClick={() => setActiveTab(2)}>
           <SwitchButton type="inactive" text="Invite" />
         </Col>
       </Row>
-
-      <Col className="mt-20">
-        {samples.map((idx) => (
-          <div key={idx}>
-            <UserCard />
-          </div>
-        ))}
+      <Col className={`mt-20 ${activeTab === 2 ? "hide" : ""}`} span={24}>
+        <UserList socket={socket} friends setActiveChannelId={setActiveChannelId} />
+      </Col>
+      <Col className={`mt-20 ${activeTab === 1 ? "hide" : ""}`} span={24}>
+        <UserList socket={socket} setActiveChannelId={setActiveChannelId} />
       </Col>
     </Wrapper>
   );
