@@ -13,7 +13,7 @@ export function get(url) {
 }
 
 async function makeAPIRequest(method, url, data) {
-  const token = await localStorage.get("id_token");
+  const token = await localStorage.getItem("jwt");
   const config = {
     method,
     url: `${process.env.REACT_APP_BACKEND_BASE_URL}${url}`,

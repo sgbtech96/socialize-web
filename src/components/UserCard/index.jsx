@@ -1,75 +1,12 @@
 import React, { useEffect, useState } from "react";
 // import PropTypes from "prop-types";
-import styled from "styled-components";
 import { Row, Col, message } from "antd";
+import { Wrapper } from "./style";
 import Icon from "react-icons-kit";
 import { userPlus } from "react-icons-kit/feather/userPlus";
 import { checkCircleO } from "react-icons-kit/fa/checkCircleO";
 import Emitter from "../../utils/emitter";
-
-const Wrapper = styled(Row)`
-  cursor: pointer;
-  padding: 10px 20px;
-  max-width: 400px;
-  border-bottom: 1px solid var(--grey);
-  :hover {
-    background-color: var(--blue-subtle);
-    border-left: 4px solid var(--blue);
-    padding-left: 16px;
-  }
-  .light-black {
-    color: var(--black-65);
-  }
-  .fade {
-    color: var(--black-45);
-  }
-  img {
-    width: 100%;
-    height: auto;
-    border-radius: 20px;
-  }
-  .unread-box {
-    display: inline-block;
-    position: relative;
-    height: 24px;
-    width: 24px;
-    border-radius: 50%;
-    background-color: var(--blue);
-    .unread-count {
-      position: absolute;
-      color: var(--white);
-      top: 50%;
-      left: 50%;
-      -webkit-transform: translateX(-50%);
-      transform: translate(-50%, -50%);
-    }
-  }
-  .avatar {
-    position: relative;
-    .dot {
-      position: absolute;
-      top: 0;
-      right: 4%;
-      height: 10px;
-      width: 10px;
-      border: 1px solid var(--white);
-      border-radius: 50%;
-      display: inline-block;
-    }
-    .dot-active {
-      background-color: var(--green);
-    }
-    .dot-inactive {
-      background-color: var(--grey);
-    }
-  }
-  .green-check {
-    color: var(--green);
-  }
-  .pointer {
-    cursor: pointer;
-  }
-`;
+import { get } from "../../utils/request";
 
 const UserCard = ({
   socket,
@@ -78,16 +15,46 @@ const UserCard = ({
 }) => {
   const [isInviteSent, setIsInviteSent] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [active, setActive] = useState(false);
 
   const handleInviteSend = () => {
     socket.emit("SEND_INVITE", handle);
     setIsInviteSent(true);
+    message.success("Invite sent");
   };
 
+  const fetchActiveStatus = async () => {
+    try {
+      const res = await get(`/api/v1/chats/isOnline/${handle}`);
+      if (res.type === "success") {
+        if (res.data.online) setActive(true);
+      }
+    } catch (e) {}
+  };
   useEffect(() => {
+    if (!handle) return;
+    fetchActiveStatus();
+  }, [handle]);
+
+  useEffect(() => {
+    socket.on("USER_CAME_ONLINE", (userHandle) => {
+      if (userHandle === handle) setActive(true);
+    });
+    socket.on("USER_WENT_OFFLINE", (userHandle) => {
+      if (userHandle === handle) setActive(false);
+    });
+    return () => {
+      socket.off("USER_CAME_ONLINE");
+      socket.off("USER_WENT_OFFLINE");
+    };
+  }, []);
+
+  useEffect(() => {
+    // Listening to unread message count
     Emitter.on("INCREMENT_UNREAD_COUNT", (userHandle) => {
       if (handle === userHandle) setUnreadCount((prevState) => prevState + 1);
     });
+    // Listening to on-click on UserCard on friends list
     Emitter.on("RESET_UNREAD_COUNT", (userHandle) => {
       if (handle === userHandle) setUnreadCount(0);
     });
@@ -98,10 +65,10 @@ const UserCard = ({
   }, []);
 
   return (
-    <Wrapper align="middle" gutter={8}>
+    <Wrapper align="middle" gutter={8} active={active}>
       <Col span={5} className="avatar">
         <img src={imageUrl} />
-        <span className="dot dot-active"></span>
+        <span className="dot"></span>
       </Col>
       <Col span={12}>
         <div className="bold-15 light-black">{name}</div>
@@ -113,7 +80,7 @@ const UserCard = ({
             <span className="unread-count medium-10">{unreadCount}</span>
           </span>
         ) : isInviteSent ? (
-          <Icon icon={checkCircleO} size={12} className="pointer green-check" />
+          <Icon icon={checkCircleO} size={12} className="green-check" />
         ) : (
           <Icon
             icon={userPlus}

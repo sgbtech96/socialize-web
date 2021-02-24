@@ -3,38 +3,13 @@ import React, { useState } from "react";
 import Icon from "react-icons-kit";
 import { grid } from "react-icons-kit/feather/grid";
 import { iosSearchStrong } from "react-icons-kit/ionicons/iosSearchStrong";
-import styled from "styled-components";
+import { Wrapper } from "./style";
 import { Row, Col } from "antd";
 import Header from "../Header";
 import TrendingSwipe from "../TrendingSwipe";
 import SearchBar from "../SearchBar";
 import SwitchButton from "../SwitchButton";
 import UserList from "../UsersList";
-
-const Wrapper = styled(Col)`
-  background-color: var(--white);
-  padding: 40px;
-  @media screen and (max-width: 400px) {
-    padding: 20px;
-  }
-  .light-black {
-    color: var(--black-85);
-  }
-  .fade {
-    color: var(--black-45);
-  }
-  .pointer {
-    cursor: pointer;
-  }
-  .grid-icon {
-    padding: 6px 8px;
-    background-color: var(--grey);
-    border-radius: 200px;
-  }
-  .hide {
-    display: none;
-  }
-`;
 
 const Sidebar = ({ socket, setActiveChannelId }) => {
   const [showSearch, setShowSearch] = useState(false);

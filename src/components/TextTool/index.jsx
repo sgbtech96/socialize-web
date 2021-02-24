@@ -5,7 +5,7 @@ import { ic_face } from "react-icons-kit/md/ic_face";
 import { send } from "react-icons-kit/fa/send";
 import styled from "styled-components";
 import { Row, Col, Input } from "antd";
-import "emoji-mart/css/emoji-mart.css";
+// import "emoji-mart/css/emoji-mart.css";
 // import { Picker } from "emoji-mart";
 
 const Wrapper = styled(Row)`

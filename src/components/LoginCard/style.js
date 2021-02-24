@@ -30,15 +30,18 @@ export const Wrapper = styled(Col)`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--primary-blue);
+    background-color: var(--blue);
     width: 100%;
     border-radius: 200px;
     padding: 20px;
     margin-top: 20px;
   }
   .link {
-    color: var(--primary-blue);
+    color: var(--blue);
     cursor: pointer;
+  }
+  .error {
+    color: var(--red);
   }
   @media screen and (max-width: 400px) {
     padding: 20px;

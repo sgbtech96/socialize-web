@@ -15,5 +15,9 @@ module.exports = {
   plugins: ["react"],
   rules: {
     "react/prop-types": 0,
+    "no-unused-vars": 0,
+    "no-undef": 0,
+    "no-empty": 0,
+    "react/jsx-no-duplicate-props": 0,
   },
 };
