@@ -1,13 +1,38 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Row, Dropdown, Menu } from "antd";
+/* eslint-disable */
+import React, { useState, useContext } from "react";
+// import PropTypes from "prop-types";
+import { Row, Dropdown, Menu, message } from "antd";
 import Icon from "react-icons-kit";
 import { user } from "react-icons-kit/feather/user";
 import { logOut } from "react-icons-kit/feather/logOut";
 import ProfileModal from "../ProfileModal";
+import { get } from "../../utils/request";
+import { useHistory } from "react-router-dom";
+import { SpinnerContext } from "../../utils/SpinnerContext";
+import { SocketContext } from "../../utils/SocketContext";
 
 const AvatarDropdown = ({ user: userProfile, children }) => {
+  const socket = useContext(SocketContext);
+  const history = useHistory();
+  const setLoading = useContext(SpinnerContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleLogoutClick = async () => {
+    setLoading(true);
+    try {
+      const res = await get(`api/v1/auth/logout`);
+      setLoading(false);
+      if (res.type === "success") {
+        localStorage.removeItem("jwt");
+        socket.disconnect();
+        history.push(`/onboarding/login`);
+      } else {
+        console.log("Error -> AvatarDropDown");
+      }
+    } catch (e) {
+      console.log("Error -> AvatarDropDown", e);
+      message.error("Something went wrong!");
+    }
+  };
   const menu = (
     <Menu>
       <Menu.Item onClick={() => setIsModalVisible(true)}>
@@ -23,7 +48,9 @@ const AvatarDropdown = ({ user: userProfile, children }) => {
           <div className="mr-5">
             <Icon icon={logOut} size={16} />
           </div>
-          <div className="normal-15">Logout</div>
+          <div className="normal-15" onClick={handleLogoutClick}>
+            Logout
+          </div>
         </Row>
       </Menu.Item>
     </Menu>
@@ -43,11 +70,6 @@ const AvatarDropdown = ({ user: userProfile, children }) => {
       </Dropdown>
     </>
   );
-};
-
-AvatarDropdown.propTypes = {
-  user: PropTypes.object,
-  children: PropTypes.node,
 };
 
 export default AvatarDropdown;

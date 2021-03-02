@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { Row } from "antd";
 export const Wrapper = styled(Row)`
-  cursor: pointer;
   padding: 10px 20px;
   max-width: 400px;
   border-bottom: 1px solid var(--grey);
   :hover {
     background-color: var(--blue-subtle);
-    border-left: 4px solid var(--blue);
+    border-left: 4px solid var(--black);
     padding-left: 16px;
   }
   .light-black {

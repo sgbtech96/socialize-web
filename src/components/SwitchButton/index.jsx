@@ -22,13 +22,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const SwitchButton = ({ type, text }) => {
+const SwitchButton = ({ type, text, cta }) => {
   return (
     <Wrapper type={type}>
       <Button
         type="primary"
         htmlType="submit"
-        icon={<Icon icon={type === "active" ? user : userPlus} size={18} />}
+        icon={<Icon icon={cta === "user" ? user : userPlus} size={18} />}
       >
         <div className={`ml-10 medium-18`}>{text}</div>
       </Button>

@@ -19,7 +19,7 @@ async function makeAPIRequest(method, url, data) {
     url: `${process.env.REACT_APP_BACKEND_BASE_URL}${url}`,
     headers: token
       ? {
-          Authorization: token,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         }
       : {

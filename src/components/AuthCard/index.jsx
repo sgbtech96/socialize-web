@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Button, Form, Input, message } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import { Wrapper } from "../LoginCard/style";
 import { useHistory } from "react-router-dom";
 import { post } from "../../utils/request";
+import { SpinnerContext } from "../../utils/SpinnerContext";
 
 // Defining a new func for string prototype
 String.prototype.replaceAt = function (index, replacement) {
@@ -27,16 +28,19 @@ const generateEncryptedEmail = (email) => {
 
 const AuthCard = ({ type }) => {
   const history = useHistory();
+  const setLoading = useContext(SpinnerContext);
   const [log, setLog] = useState(null); // Will contain backend validation error
 
   // Make a call to onboarding APIs
   const postForm = async (values) => {
+    setLoading(true);
     const payload =
       type === "send"
         ? values
         : { email: sessionStorage.getItem("onboarding-email"), otp: values.otp };
     try {
       const res = await post(`api/v1/onboarding/${type}Otp`, payload);
+      setLoading(false);
       if (res.type === "success") {
         if (type === "send") history.push("verify-otp");
         else history.push("register");

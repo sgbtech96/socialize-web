@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // import PropTypes from "prop-types";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -10,6 +10,11 @@ const Wrapper = styled.div`
     position: relative;
     img {
       border-radius: 20px;
+      display: block;
+      max-width: 230px;
+      max-height: 95px;
+      width: auto;
+      height: auto;
     }
     .handle {
       position: absolute;
@@ -17,63 +22,49 @@ const Wrapper = styled.div`
       left: 12%;
       color: var(--white);
     }
-    .dot {
-      position: absolute;
-      bottom: 13%;
-      right: 28%;
-      height: 8px;
-      width: 8px;
-      border: 1px solid var(--white);
-      border-radius: 50%;
-      display: inline-block;
-    }
-    .dot-active {
-      background-color: var(--green);
-    }
-    .dot-inactive {
-      background-color: var(--grey);
-    }
   }
 `;
 
-const { min } = Math;
-
-const settings = (len) => ({
+const settings = {
   arrows: false,
   infinite: true,
   autoplay: true,
   autoplaySpeed: 1200,
   speed: 500,
-  slidesToShow: min(len, 3),
-  slidesToScroll: min(len, 2),
-  // responsive: [
-  //   {
-  //     breakpoint: 1024,
-  //     settings: {
-  //       slidesToShow: min(len, 2),
-  //       slidesToScroll: min(len, 1),
-  //       initialSlide: min(len, 2),
-  //     },
-  //   },
-  //   {
-  //     breakpoint: 480,
-  //     settings: {
-  //       slidesToShow: min(len, 1),
-  //       slidesToScroll: min(len, 1),
-  //     },
-  //   },
-  // ],
-});
+  slidesToShow: 3,
+  slidesToScroll: 2,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        initialSlide: 2,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
 let samples = [1, 2, 3, 4, 5, 6, 7];
 const TrendingSwipe = () => {
+  const [height, setHeight] = useState(null);
+  useEffect(() => {
+    setHeight(document.getElementById("user-avatar").clientHeight);
+    console.log(document.getElementById("user-avatar"));
+  }, []);
   return (
-    <Wrapper>
-      <Slider {...settings(7)}>
+    <Wrapper height={height}>
+      <Slider {...settings}>
         {samples.map((idx) => (
           <div key={idx} className="avatar">
-            <img src="/user-avatar2.jpg" height={110} width={97} />
-            <div className="medium-10 handle">John</div>
-            <span className="dot dot-active"></span>
+            <img src="/user-avatar2.jpg" id="user-avatar" />
+            <div className="medium-10 handle">Miley</div>
           </div>
         ))}
       </Slider>

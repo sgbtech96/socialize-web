@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-// import PropTypes from "prop-types";
+import React, { useContext, useState } from "react";
 import Icon from "react-icons-kit";
-import { ic_face } from "react-icons-kit/md/ic_face";
 import { send } from "react-icons-kit/fa/send";
 import styled from "styled-components";
 import { Row, Col, Input } from "antd";
-// import "emoji-mart/css/emoji-mart.css";
-// import { Picker } from "emoji-mart";
+import { SocketContext } from "../../utils/SocketContext";
 
 const Wrapper = styled(Row)`
-  padding: 24px;
+  height: 10%;
+  padding: 12px;
   background-color: var(--white);
   .ant-input {
     border: none;
@@ -18,35 +16,35 @@ const Wrapper = styled(Row)`
   .tool-icon {
     background-color: var(--blue-subtle);
     color: var(--blue);
-    padding: 4px 6px;
+    padding: 16px;
     border-radius: 50%;
+    cursor: pointer;
   }
 `;
 
-const TypingTool = ({ socket, channelId }) => {
+const TypingTool = ({ activeChannelId }) => {
+  const socket = useContext(SocketContext);
   const [text, setText] = useState("");
   const handleMessageSend = () => {
-    if (!text.length) return;
-    socket.emit("SEND_MESSAGE", channelId, text);
+    let textMessage = text.trim();
+    if (!textMessage.length) return;
+    socket.emit("SEND_MESSAGE", activeChannelId, textMessage);
     setText("");
   };
   return (
     <Wrapper gutter={8} align="middle">
-      <Col span={2}>
-        <Icon icon={ic_face} size={32} className="tool-icon" />
-      </Col>
-      <Col span={20}>
+      <Col span={22}>
         <Input
           placeholder="Write your message..."
           value={text}
-          onChange={setText}
+          onChange={(e) => setText(e.target.value)}
           onPressEnter={handleMessageSend}
         />
       </Col>
       <Col span={2} align="middle">
         <Icon
           icon={send}
-          size={20}
+          size={22}
           className="tool-icon"
           onClick={handleMessageSend}
         />

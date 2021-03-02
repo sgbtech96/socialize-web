@@ -41,6 +41,10 @@
   font-family: "Open Sans", sans-serif;
 }
 
+body {
+  background-color: var(--grey);
+}
+
 :root {
   --blue: #1c9dea;
   --blue-subtle: #eff7fe;

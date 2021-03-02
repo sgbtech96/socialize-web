@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Col } from "antd";
 export const Wrapper = styled(Col)`
   background-color: var(--white);
-  padding: 40px;
+  padding: 12px 32px;
   @media screen and (max-width: 400px) {
     padding: 20px;
   }

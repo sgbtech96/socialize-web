@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Button, Form, Input, message } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Wrapper } from "./style";
 import { useHistory } from "react-router-dom";
 import { post } from "../../utils/request";
+import { SpinnerContext } from "../../utils/SpinnerContext";
 
 const LoginCard = ({ type }) => {
   const history = useHistory();
+  const setLoading = useContext(SpinnerContext);
   const [log, setLog] = useState(null); // Will contain backend validation error
 
   const postForm = async (values) => {
+    setLoading(true);
     try {
       const res = await post(
         `api/v1/${type === "login" ? "auth/login" : "onboarding/register"}`,
         values
       );
+      setLoading(false);
       if (res.type === "success") {
         if (type === "login") {
           localStorage.setItem("jwt", res.data.token);
@@ -70,22 +74,39 @@ const LoginCard = ({ type }) => {
           }
         >
           {type === "register" && (
-            <Form.Item
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
-                },
-              ]}
-            >
-              <Input
-                prefix={<MailOutlined />}
-                type="email"
-                disabled
-                placeholder="Email address"
-              />
-            </Form.Item>
+            <>
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your email!",
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<MailOutlined />}
+                  type="email"
+                  disabled
+                  placeholder="Email address"
+                />
+              </Form.Item>
+              <Form.Item
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your name!",
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<UserOutlined />}
+                  type="text"
+                  placeholder="First Name"
+                />
+              </Form.Item>
+            </>
           )}
           <Form.Item
             name="handle"

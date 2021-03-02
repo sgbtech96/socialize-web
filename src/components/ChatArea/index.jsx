@@ -1,24 +1,31 @@
-/* eslint disable */
-import React, { useEffect, useState } from "react";
+/* eslint-disable */
+import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { get } from "../../utils/request";
 import ChatBubble from "../ChatBubble";
 import styled from "styled-components";
 import { Col } from "antd";
+import { SocketContext } from "../../utils/SocketContext";
 
 const Wrapper = styled(Col)`
+  height: 90%;
+  background-color: var(--blue-subtle);
   overflow-y: scroll;
+  padding: 48px;
 `;
-const ChatArea = ({ socket, channelId }) => {
+
+const ChatArea = ({ activeChannelId }) => {
+  const socket = useContext(SocketContext);
   const [chats, setChats] = useState([]);
   const fetchChats = async () => {
-    const res = await get(`api/v1/chats/chat/${channelId}`);
+    const res = await get(`api/v1/chats/chat/${activeChannelId}`);
     if (res.type === "success") setChats(res.data);
   };
   useEffect(() => {
-    if (!channelId) return;
+    console.log(activeChannelId);
+    if (!activeChannelId) return;
     fetchChats();
-  }, [channelId]);
+  }, [activeChannelId]);
 
   useEffect(() => {
     socket.on("INCOMING_MESSAGE", (chat) => {
@@ -28,12 +35,12 @@ const ChatArea = ({ socket, channelId }) => {
       socket.off("INCOMING_MESSAGE");
     };
   }, []);
-  
+
   return (
     <Wrapper className="invisible-scroll">
       {chats.map((chat, idx) => {
         return (
-          <div key={idx}>
+          <div key={idx} className={idx > 0 ? "mt-15" : ""}>
             <ChatBubble chat={chat} />
           </div>
         );
