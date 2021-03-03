@@ -6,9 +6,14 @@ export const Wrapper = styled(Row)`
   border-bottom: 1px solid var(--grey);
   :hover {
     background-color: var(--blue-subtle);
-    border-left: 4px solid var(--black);
+    border-left: 4px solid var(--blue);
     padding-left: 16px;
   }
+  ${(props) =>
+    props.selected
+      ? "background-color: var(--blue-subtle);border-left: 4px solid var(--blue);padding-left: 16px;"
+      : ""}
+
   .light-black {
     color: var(--black-65);
   }

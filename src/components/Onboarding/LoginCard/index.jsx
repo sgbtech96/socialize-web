@@ -4,8 +4,8 @@ import { Button, Form, Input, message } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Wrapper } from "./style";
 import { useHistory } from "react-router-dom";
-import { post } from "../../utils/request";
-import { SpinnerContext } from "../../utils/SpinnerContext";
+import { post } from "../../../utils/request";
+import { SpinnerContext } from "../../../utils/contexts/SpinnerContext";
 
 const LoginCard = ({ type }) => {
   const history = useHistory();

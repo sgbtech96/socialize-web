@@ -5,16 +5,14 @@ import { Wrapper } from "./style";
 import Icon from "react-icons-kit";
 import { userPlus } from "react-icons-kit/feather/userPlus";
 import { checkCircleO } from "react-icons-kit/fa/checkCircleO";
-import Emitter from "../../utils/emitter";
-import { get } from "../../utils/request";
-import { SocketContext } from "../../utils/SocketContext";
-import { ActiveChannelIdContext } from "../../utils/ActiveChannelIdContext";
+import Emitter from "../../../../../utils/emitter";
+import { get } from "../../../../../utils/request";
+import { SocketContext } from "../../../../../utils/contexts/SocketContext";
+import { ActiveChannelIdContext } from "../../../../../utils/contexts/ActiveChannelIdContext";
 
-const UserCard = ({
-  user: { handle, name, imageUrl, tagline, channelId },
-  isFriend,
-}) => {
+const UserCard = ({ user, isFriend, activeChannelId, setActiveUser }) => {
   const socket = useContext(SocketContext);
+  const { handle, name, imageUrl, tagline, channelId } = user;
   const { setActiveChannelId } = useContext(ActiveChannelIdContext);
   const [isInviteSent, setIsInviteSent] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -66,13 +64,14 @@ const UserCard = ({
   return (
     <Wrapper
       align="middle"
-      gutter={8}
       active={active}
+      selected={channelId === activeChannelId}
       className={`${isFriend ? "pointer" : ""}`}
       onClick={() => {
-        console.log(isFriend);
-        if (isFriend) setActiveChannelId(channelId);
-        socket.emit("JOIN_CHANNEL", channelId);
+        if (isFriend) {
+          setActiveChannelId(channelId);
+          setActiveUser({ ...user, isActive: active });
+        }
         setUnreadCount(0);
       }}
     >
@@ -80,7 +79,7 @@ const UserCard = ({
         <img src={imageUrl} />
         <span className="dot"></span>
       </Col>
-      <Col span={12}>
+      <Col offset={1} span={11}>
         <div className="bold-15 light-black">{name}</div>
         <div className="medium-12 fade tc-1 mt-5">{tagline}</div>
       </Col>

@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { Col } from "antd";
 export const Wrapper = styled(Col)`
   background-color: var(--white);
-  padding: 12px 32px;
+  height: calc(100vh - 24px - 84px);
+  padding: 12px 24px;
   @media screen and (max-width: 400px) {
-    padding: 20px;
+    padding: 4px 8px;
   }
   .light-black {
     color: var(--black-85);

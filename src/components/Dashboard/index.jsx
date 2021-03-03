@@ -1,20 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Row, Col } from "antd";
 import styled from "styled-components";
-import Header from "../Header";
-import Sidebar from "../Sidebar";
-import ChatArea from "../ChatArea";
-import TextTool from "../TextTool";
+import Sidebar from "./Sidebar";
+import ChatArea from "./ChatArea";
+import TextTool from "./TextTool";
 import { io } from "socket.io-client";
-import { SocketContext } from "../../utils/SocketContext";
-import { SpinnerContext } from "../../utils/SpinnerContext";
-import { ActiveChannelIdContext } from "../../utils/ActiveChannelIdContext";
+import { SocketContext } from "../../utils/contexts/SocketContext";
+import { SpinnerContext } from "../../utils/contexts/SpinnerContext";
+import { ActiveChannelIdContext } from "../../utils/contexts/ActiveChannelIdContext";
 
 let socket = null;
-const Wrapper = styled(Row)``;
+const Wrapper = styled(Row)`
+  padding: 12px;
+`;
 const Dashboard = () => {
   const setLoading = useContext(SpinnerContext);
   const [activeChannelId, setActiveChannelId] = useState(null);
+  const [activeUser, setActiveUser] = useState(null);
+
   useEffect(() => {
     setLoading(true);
     socket = io(`${process.env.REACT_APP_BACKEND_BASE_URL}`, {
@@ -40,14 +43,14 @@ const Dashboard = () => {
           }}
         >
           <Wrapper>
-            <Col span={24}>
-              <Header />
-            </Col>
             <Col xs={24} sm={20} md={10} lg={8} xl={8} xxl={6}>
-              <Sidebar />
+              <Sidebar
+                activeChannelId={activeChannelId}
+                setActiveUser={setActiveUser}
+              />
             </Col>
             <Col xs={24} sm={24} md={14} lg={16} xl={16} xxl={18}>
-              <ChatArea activeChannelId={activeChannelId} />
+              <ChatArea activeChannelId={activeChannelId} activeUser={activeUser} />
               <TextTool activeChannelId={activeChannelId} />
             </Col>
           </Wrapper>

@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
-import { get } from "../../utils/request";
+import { get } from "../../../../utils/request";
 import { Col } from "antd";
-import UserCard from "../UserCard";
-import Emitter from "../../utils/emitter";
-import { SocketContext } from "../../utils/contexts/SocketContext";
+import UserCard from "./UserCard";
+import Emitter from "../../../../utils/emitter";
+import { SocketContext } from "../../../../utils/contexts/SocketContext";
 import styled from "styled-components";
-import { decodeJWT } from "../../utils/decodeJWT";
+import { decodeJWT } from "../../../../utils/decodeJWT";
 
 const Wrapper = styled(Col)`
   overflow-y: scroll;
 `;
-const UsersList = ({ friends, activeChannelId }) => {
+const UsersList = ({ friends, activeChannelId, setActiveUser }) => {
   const socket = useContext(SocketContext);
   const [users, setUsers] = useState([]);
 
@@ -82,6 +82,7 @@ const UsersList = ({ friends, activeChannelId }) => {
             user={user}
             isFriend={friends}
             activeChannelId={activeChannelId}
+            setActiveUser={setActiveUser}
           />
         </div>
       ))}

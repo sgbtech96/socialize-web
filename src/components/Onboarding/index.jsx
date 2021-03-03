@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect, useParams, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
-import AuthCard from "../AuthCard";
-import LoginCard from "../LoginCard";
+import AuthCard from "./AuthCard";
+import LoginCard from "./LoginCard";
 
 import { Row, Col } from "antd";
 

@@ -3,11 +3,11 @@ import Icon from "react-icons-kit";
 import { send } from "react-icons-kit/fa/send";
 import styled from "styled-components";
 import { Row, Col, Input } from "antd";
-import { SocketContext } from "../../utils/SocketContext";
+import { SocketContext } from "../../../utils/contexts/SocketContext";
 
 const Wrapper = styled(Row)`
-  height: 10%;
-  padding: 12px;
+  height: 72px;
+  padding: 0 16px;
   background-color: var(--white);
   .ant-input {
     border: none;
@@ -32,7 +32,7 @@ const TypingTool = ({ activeChannelId }) => {
     setText("");
   };
   return (
-    <Wrapper gutter={8} align="middle">
+    <Wrapper gutter={8} align="middle" justify="space-between">
       <Col span={22}>
         <Input
           placeholder="Write your message..."
@@ -44,7 +44,7 @@ const TypingTool = ({ activeChannelId }) => {
       <Col span={2} align="middle">
         <Icon
           icon={send}
-          size={22}
+          size={20}
           className="tool-icon"
           onClick={handleMessageSend}
         />

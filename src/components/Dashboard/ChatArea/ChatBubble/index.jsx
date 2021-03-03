@@ -1,17 +1,15 @@
 /* eslint-disable */
 import React from "react";
-import PropTypes from "prop-types";
 import moment from "moment";
 import styled from "styled-components";
 import { Row, Col } from "antd";
-import { decodeJWT } from "../../utils/decodeJWT";
+import { decodeJWT } from "../../../../utils/decodeJWT";
 
 const Wrapper = styled(Col)`
-  .box {
+  .message-box {
     display: inline-block;
     background-color: ${(props) =>
       props.isItMe ? "var(--blue)" : "var(--grey-subtle)"};
-    color: ${(props) => (props.isItMe ? "var(--white)" : "var(--black-85)")};
     padding: 12px 16px;
     border-radius: 30px;
     ${(props) =>
@@ -19,7 +17,12 @@ const Wrapper = styled(Col)`
         ? "border-bottom-right-radius: 0;"
         : "border-bottom-left-radius: 0;"}
     max-width: 60%;
-    letter-spacing: 0.4px;
+    .message {
+      width: 100%;
+      overflow-wrap: break-word;
+      color: ${(props) => (props.isItMe ? "var(--white)" : "var(--black-85)")};
+      letter-spacing: 0.4px;
+    }
   }
   .light-black {
     color: var(--black-85);
@@ -37,17 +40,11 @@ const ChatBubble = ({ chat: { senderHandle, text, timeStamp } }) => {
         <span className="mr-15 bold-15 light-black">{senderHandle}</span>
         <span className="normal-10 fade">{formatTime(timeStamp)}</span>
       </div>
-      <span className="medium-12 box mt-5">{text}</span>
+      <span className="message-box mt-5">
+        <div className="medium-12 message">{text}</div>
+      </span>
     </Wrapper>
   );
-};
-
-ChatBubble.propTypes = {
-  chat: {
-    sender: PropTypes.string,
-    text: PropTypes.string,
-    timeStamp: PropTypes.any,
-  },
 };
 
 export default ChatBubble;

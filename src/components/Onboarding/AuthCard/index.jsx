@@ -4,8 +4,8 @@ import { Button, Form, Input, message } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import { Wrapper } from "../LoginCard/style";
 import { useHistory } from "react-router-dom";
-import { post } from "../../utils/request";
-import { SpinnerContext } from "../../utils/SpinnerContext";
+import { post } from "../../../utils/request";
+import { SpinnerContext } from "../../../utils/contexts/SpinnerContext";
 
 // Defining a new func for string prototype
 String.prototype.replaceAt = function (index, replacement) {

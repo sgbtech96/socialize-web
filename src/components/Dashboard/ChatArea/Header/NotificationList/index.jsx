@@ -3,10 +3,10 @@ import { Row, Dropdown, Menu, message } from "antd";
 import Icon from "react-icons-kit";
 import { ic_notifications_active } from "react-icons-kit/md/ic_notifications_active";
 import styled from "styled-components";
-import NotificationCard from "../NotificationCard";
-import { get } from "../../utils/request";
-import { SocketContext } from "../../utils/SocketContext";
-import { decodeJWT } from "../../utils/decodeJWT";
+import NotificationCard from "./NotificationCard";
+import { get } from "../../../../../utils/request";
+import { SocketContext } from "../../../../../utils/contexts/SocketContext";
+import { decodeJWT } from "../../../../../utils/decodeJWT";
 
 const Wrapper = styled.div`
   .bell-icon {

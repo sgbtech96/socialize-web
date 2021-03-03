@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Row, Col, message } from "antd";
 import { Icon } from "react-icons-kit";
 import { checkCircle } from "react-icons-kit/feather/checkCircle";
-import { SocketContext } from "../../utils/SocketContext";
+import { SocketContext } from "../../../../../../utils/contexts/SocketContext";
 
 const Wrapper = styled(Row)`
   .user-avatar {
