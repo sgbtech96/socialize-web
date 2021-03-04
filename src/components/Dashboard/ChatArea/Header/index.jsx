@@ -3,16 +3,26 @@ import React, { useEffect, useState } from "react";
 // import PropTypes from "prop-types";
 import { Row, message } from "antd";
 import AvatarDropdown from "./AvatarDropdown";
-import { get } from "../../../../utils/request";
 import Emitter from "../../../../utils/emitter";
 import NotificationList from "./NotificationList";
 import ProfileModal from "./ProfileModal";
 import styled from "styled-components";
+import Icon from "react-icons-kit";
+import { ic_keyboard_arrow_left } from "react-icons-kit/md/ic_keyboard_arrow_left";
+import { connect } from "react-redux";
+import {
+  fetchMyProfile,
+  resetActiveFriendProfile,
+} from "../../../../actions/dashboard";
+import { setActiveSection } from "../../../../actions/display";
 
 const Wrapper = styled(Row)`
   background-color: var(--white);
   height: 84px;
   padding: 0 24px;
+  .pointer {
+    cursor: pointer;
+  }
   .user-avatar {
     cursor: pointer;
     border-radius: 50%;
@@ -42,27 +52,21 @@ const Wrapper = styled(Row)`
   }
 `;
 
-const Header = ({ activeUser }) => {
-  const [user, setUser] = useState({});
+const Header = ({
+  myProfile,
+  activeFriend,
+  fetchMyProfile,
+  setActiveSection,
+  mobileWeb,
+  resetActiveFriendProfile,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const fetchUser = async () => {
-    try {
-      const res = await get(`api/v1/profile/me`);
-      if (res.type === "success") setUser(res.data);
-      else console.log("Error -> Header", res);
-    } catch (e) {
-      console.log("Error -> Header", e);
-      message.error("Something went wrong!");
-    }
-  };
-
   useEffect(() => {
-    fetchUser();
+    fetchMyProfile();
   }, []);
 
   useEffect(() => {
-    Emitter.on("PROFILE_EDITED", () => fetchUser());
+    Emitter.on("PROFILE_EDITED", () => fetchMyProfile());
 
     return () => {
       Emitter.off("PROFILE_EDITED");
@@ -73,34 +77,44 @@ const Header = ({ activeUser }) => {
     <>
       {isModalVisible && (
         <ProfileModal
-          user={activeUser}
           isModalVisible={isModalVisible}
           setIsModalVisible={setIsModalVisible}
         />
       )}
       <Wrapper align="middle">
         <Row className="mr-auto" align="middle">
-          {activeUser && (
+          {mobileWeb && (
+            <Icon
+              icon={ic_keyboard_arrow_left}
+              size={24}
+              className="mr-10 pointer"
+              onClick={() => {
+                setActiveSection(1);
+                resetActiveFriendProfile();
+              }}
+            />
+          )}
+          {activeFriend.handle && (
             <>
               <div
                 className="active-user-avatar mr-10"
                 onClick={() => setIsModalVisible(true)}
               >
                 <img
-                  src={activeUser?.imageUrl}
+                  src={activeFriend.imageUrl}
                   alt="avatar"
                   height={48}
                   width={48}
                 />
               </div>
               <div>
-                <div className="active-user-name medium-18">{activeUser?.name}</div>
+                <div className="active-user-name medium-18">{activeFriend.name}</div>
                 <span
                   className={`mt-5 chip bold-12 ${
-                    activeUser?.isActive ? "active" : "offline"
+                    activeFriend.isActive ? "active" : "offline"
                   }`}
                 >
-                  {activeUser?.isActive ? "Active" : "Offline"}
+                  {activeFriend.isActive ? "Active" : "Offline"}
                 </span>
               </div>
             </>
@@ -110,9 +124,9 @@ const Header = ({ activeUser }) => {
           <NotificationList />
         </div>
         <div>
-          <AvatarDropdown user={user}>
+          <AvatarDropdown>
             <img
-              src={user.imageUrl || "/avatar-placeholder.webp"}
+              src={myProfile.imageUrl || "/avatar-placeholder.webp"}
               height={44}
               width={44}
               className="user-avatar"
@@ -124,4 +138,17 @@ const Header = ({ activeUser }) => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  const { myProfile, activeFriendProfile } = state.dashboard;
+  const { mobileWeb } = state.display;
+  return {
+    myProfile: myProfile.data,
+    activeFriend: activeFriendProfile.data,
+    mobileWeb,
+  };
+};
+export default connect(mapStateToProps, {
+  fetchMyProfile,
+  setActiveSection,
+  resetActiveFriendProfile,
+})(Header);

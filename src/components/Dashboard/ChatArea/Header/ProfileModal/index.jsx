@@ -8,6 +8,7 @@ import Icon from "react-icons-kit";
 import { pencil } from "react-icons-kit/fa/pencil";
 import styled from "styled-components";
 import { SpinnerContext } from "../../../../../utils/contexts/SpinnerContext";
+import { connect } from "react-redux";
 
 const Wrapper = styled.div`
   input[type="file"] {
@@ -51,6 +52,7 @@ const ProfileModal = ({
       (snapshot) => {},
       (error) => {
         console.log("Error while uploading image!");
+        setUploading(false);
       },
       () => {
         storage
@@ -179,4 +181,11 @@ const ProfileModal = ({
     </Modal>
   );
 };
-export default ProfileModal;
+
+const mapStateToProps = (state, ownProps) => {
+  const { myProfile, activeFriendProfile } = state.dashboard;
+  return {
+    user: ownProps.me ? myProfile.data : activeFriendProfile.data,
+  };
+};
+export default connect(mapStateToProps, null)(ProfileModal);

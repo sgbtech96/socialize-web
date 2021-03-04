@@ -4,6 +4,7 @@ import { send } from "react-icons-kit/fa/send";
 import styled from "styled-components";
 import { Row, Col, Input } from "antd";
 import { SocketContext } from "../../../utils/contexts/SocketContext";
+import { connect } from "react-redux";
 
 const Wrapper = styled(Row)`
   height: 72px;
@@ -53,6 +54,9 @@ const TypingTool = ({ activeChannelId }) => {
   );
 };
 
-TypingTool.propTypes = {};
-
-export default TypingTool;
+const mapStateToProps = (state) => {
+  return {
+    activeChannelId: state.dashboard.activeFriendProfile.data?.channelId,
+  };
+};
+export default connect(mapStateToProps, null)(TypingTool);

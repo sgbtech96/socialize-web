@@ -1,12 +1,12 @@
 /* eslint-disable */
 import React, { useEffect, useState, useRef } from "react";
-import PropTypes from "prop-types";
 import { get } from "../../../utils/request";
 import ChatBubble from "./ChatBubble";
 import styled from "styled-components";
 import { Col } from "antd";
 import Emitter from "../../../utils/emitter";
 import Header from "./Header";
+import { connect } from "react-redux";
 
 const Wrapper = styled(Col)`
   height: calc(100vh - 24px - 84px - 72px);
@@ -15,7 +15,7 @@ const Wrapper = styled(Col)`
   padding: 40px;
 `;
 
-const ChatArea = ({ activeChannelId, activeUser }) => {
+const ChatArea = ({ activeChannelId }) => {
   const dummyDivRef = useRef(null);
   const [chats, setChats] = useState([]);
   const fetchChats = async () => {
@@ -46,7 +46,7 @@ const ChatArea = ({ activeChannelId, activeUser }) => {
 
   return (
     <>
-      <Header activeUser={activeUser} />
+      <Header />
       <Wrapper className="invisible-scroll">
         {chats.map((chat, idx) => {
           return (
@@ -61,8 +61,9 @@ const ChatArea = ({ activeChannelId, activeUser }) => {
   );
 };
 
-ChatArea.propTypes = {
-  channelId: PropTypes.string,
+const mapStateToProps = (state) => {
+  return {
+    activeChannelId: state.dashboard.activeFriendProfile.data?.channelId,
+  };
 };
-
-export default ChatArea;
+export default connect(mapStateToProps, null)(ChatArea);

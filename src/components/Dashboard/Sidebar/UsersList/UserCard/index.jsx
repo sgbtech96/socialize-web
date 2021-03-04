@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-// import PropTypes from "prop-types";
 import { Row, Col, message } from "antd";
 import { Wrapper } from "./style";
 import Icon from "react-icons-kit";
@@ -8,12 +7,20 @@ import { checkCircleO } from "react-icons-kit/fa/checkCircleO";
 import Emitter from "../../../../../utils/emitter";
 import { get } from "../../../../../utils/request";
 import { SocketContext } from "../../../../../utils/contexts/SocketContext";
-import { ActiveChannelIdContext } from "../../../../../utils/contexts/ActiveChannelIdContext";
+import { connect } from "react-redux";
+import { setActiveFriendProfile } from "../../../../../actions/dashboard";
+import { setActiveSection } from "../../../../../actions/display";
 
-const UserCard = ({ user, isFriend, activeChannelId, setActiveUser }) => {
+const UserCard = ({
+  user,
+  isFriend,
+  activeChannelId,
+  setActiveFriendProfile,
+  mobileWeb,
+  setActiveSection,
+}) => {
   const socket = useContext(SocketContext);
   const { handle, name, imageUrl, tagline, channelId } = user;
-  const { setActiveChannelId } = useContext(ActiveChannelIdContext);
   const [isInviteSent, setIsInviteSent] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const [active, setActive] = useState(false);
@@ -32,6 +39,7 @@ const UserCard = ({ user, isFriend, activeChannelId, setActiveUser }) => {
       }
     } catch (e) {}
   };
+
   useEffect(() => {
     if (!handle) return;
     fetchActiveStatus();
@@ -69,8 +77,8 @@ const UserCard = ({ user, isFriend, activeChannelId, setActiveUser }) => {
       className={`${isFriend ? "pointer" : ""}`}
       onClick={() => {
         if (isFriend) {
-          setActiveChannelId(channelId);
-          setActiveUser({ ...user, isActive: active });
+          setActiveFriendProfile(user);
+          if (mobileWeb) setActiveSection(2);
         }
         setUnreadCount(0);
       }}
@@ -105,6 +113,15 @@ const UserCard = ({ user, isFriend, activeChannelId, setActiveUser }) => {
   );
 };
 
-UserCard.propTypes = {};
+const mapStateToProps = (state) => {
+  const { mobileWeb } = state.display;
+  return {
+    activeChannelId: state.dashboard.activeFriendProfile.data?.channelId || null,
+    mobileWeb,
+  };
+};
 
-export default UserCard;
+export default connect(mapStateToProps, {
+  setActiveFriendProfile,
+  setActiveSection,
+})(UserCard);

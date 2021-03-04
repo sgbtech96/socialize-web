@@ -5,8 +5,12 @@ import "antd/dist/antd.css";
 import "./App.css";
 import { Spin } from "antd";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import { makeStore } from "./store";
 import Onboarding from "./components/Onboarding";
 import Dashboard from "./components/Dashboard";
+
+const store = makeStore();
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
@@ -38,21 +42,24 @@ const RedirectRoute = ({ component: Component, ...rest }) => (
 
 function App() {
   const [loading, setLoading] = useState(false);
+
   return (
     <SpinnerContext.Provider value={setLoading}>
       <Spin tip="Please wait..." spinning={loading}>
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/onboarding/login" />
-            </Route>
-            <RedirectRoute path="/onboarding" component={Onboarding} />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
-            <Route path="/">
-              <div>404 not found :(</div>
-            </Route>
-          </Switch>
-        </Router>
+        <Provider store={store}>
+          <Router>
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/onboarding/login" />
+              </Route>
+              <RedirectRoute path="/onboarding" component={Onboarding} />
+              <PrivateRoute path="/dashboard" component={Dashboard} />
+              <Route path="/">
+                <div>404 not found :(</div>
+              </Route>
+            </Switch>
+          </Router>
+        </Provider>
       </Spin>
     </SpinnerContext.Provider>
   );

@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 import { SpinnerContext } from "../../../../utils/contexts/SpinnerContext";
 import { SocketContext } from "../../../../utils/contexts/SocketContext";
 
-const AvatarDropdown = ({ user: userProfile, children }) => {
+const AvatarDropdown = ({ children }) => {
   const socket = useContext(SocketContext);
   const history = useHistory();
   const setLoading = useContext(SpinnerContext);
@@ -60,7 +60,6 @@ const AvatarDropdown = ({ user: userProfile, children }) => {
       {isModalVisible && (
         <ProfileModal
           me
-          user={userProfile}
           isModalVisible={isModalVisible}
           setIsModalVisible={setIsModalVisible}
         />

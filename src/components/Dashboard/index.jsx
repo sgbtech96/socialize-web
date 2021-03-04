@@ -7,16 +7,27 @@ import TextTool from "./TextTool";
 import { io } from "socket.io-client";
 import { SocketContext } from "../../utils/contexts/SocketContext";
 import { SpinnerContext } from "../../utils/contexts/SpinnerContext";
-import { ActiveChannelIdContext } from "../../utils/contexts/ActiveChannelIdContext";
+import { connect } from "react-redux";
+import { setMobileWeb } from "../../actions/display";
 
 let socket = null;
 const Wrapper = styled(Row)`
   padding: 12px;
+  .hide {
+    display: none;
+  }
 `;
-const Dashboard = () => {
+const Dashboard = ({ mobileWeb, activeSection, setMobileWeb }) => {
   const setLoading = useContext(SpinnerContext);
-  const [activeChannelId, setActiveChannelId] = useState(null);
-  const [activeUser, setActiveUser] = useState(null);
+  const getDeviceSize = () => {
+    if (window.innerWidth < 764) {
+      setMobileWeb(true);
+    }
+  };
+
+  useEffect(() => {
+    getDeviceSize();
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -36,28 +47,41 @@ const Dashboard = () => {
   return (
     socket && (
       <SocketContext.Provider value={socket}>
-        <ActiveChannelIdContext.Provider
-          value={{
-            activeChannelId,
-            setActiveChannelId,
-          }}
-        >
-          <Wrapper>
-            <Col xs={24} sm={20} md={10} lg={8} xl={8} xxl={6}>
-              <Sidebar
-                activeChannelId={activeChannelId}
-                setActiveUser={setActiveUser}
-              />
-            </Col>
-            <Col xs={24} sm={24} md={14} lg={16} xl={16} xxl={18}>
-              <ChatArea activeChannelId={activeChannelId} activeUser={activeUser} />
-              <TextTool activeChannelId={activeChannelId} />
-            </Col>
-          </Wrapper>
-        </ActiveChannelIdContext.Provider>
+        <Wrapper>
+          <Col
+            xs={24}
+            sm={20}
+            md={10}
+            lg={8}
+            xl={8}
+            xxl={6}
+            className={mobileWeb && activeSection === 2 ? "hide" : ""}
+          >
+            <Sidebar />
+          </Col>
+          <Col
+            xs={24}
+            sm={24}
+            md={14}
+            lg={16}
+            xl={16}
+            xxl={18}
+            className={mobileWeb && activeSection === 1 ? "hide" : ""}
+          >
+            <ChatArea />
+            <TextTool />
+          </Col>
+        </Wrapper>
       </SocketContext.Provider>
     )
   );
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  const { mobileWeb, activeSection } = state.display;
+  return {
+    mobileWeb,
+    activeSection,
+  };
+};
+export default connect(mapStateToProps, { setMobileWeb })(Dashboard);

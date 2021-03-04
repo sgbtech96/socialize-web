@@ -6,11 +6,12 @@ import Emitter from "../../../../utils/emitter";
 import { SocketContext } from "../../../../utils/contexts/SocketContext";
 import styled from "styled-components";
 import { decodeJWT } from "../../../../utils/decodeJWT";
+import { connect } from "react-redux";
 
 const Wrapper = styled(Col)`
   overflow-y: scroll;
 `;
-const UsersList = ({ friends, activeChannelId, setActiveUser }) => {
+const UsersList = ({ friends, activeChannelId }) => {
   const socket = useContext(SocketContext);
   const [users, setUsers] = useState([]);
 
@@ -78,16 +79,17 @@ const UsersList = ({ friends, activeChannelId, setActiveUser }) => {
     <Wrapper className="mt-20 invisible-scroll" span={24}>
       {users?.map((user) => (
         <div key={user.handle}>
-          <UserCard
-            user={user}
-            isFriend={friends}
-            activeChannelId={activeChannelId}
-            setActiveUser={setActiveUser}
-          />
+          <UserCard user={user} isFriend={friends} />
         </div>
       ))}
     </Wrapper>
   );
 };
 
-export default UsersList;
+const mapStateToProps = (state) => {
+  return {
+    activeChannelId: state.dashboard.activeFriendProfile.data?.channelId,
+  };
+};
+
+export default connect(mapStateToProps, null)(UsersList);

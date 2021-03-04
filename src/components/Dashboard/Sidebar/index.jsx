@@ -7,7 +7,7 @@ import SwitchButton from "./SwitchButton";
 import UserList from "./UsersList";
 import Header from "./Header";
 
-const Sidebar = ({ activeChannelId, setActiveUser }) => {
+const Sidebar = () => {
   const [activeTab, setActiveTab] = useState(2);
 
   return (
@@ -38,14 +38,10 @@ const Sidebar = ({ activeChannelId, setActiveUser }) => {
           </Col>
         </Row>
         <Col className={`mt-20 ${activeTab === 2 ? "hide" : ""}`} span={24}>
-          <UserList
-            friends
-            activeChannelId={activeChannelId}
-            setActiveUser={setActiveUser}
-          />
+          <UserList friends />
         </Col>
         <Col className={`mt-20 ${activeTab === 1 ? "hide" : ""}`} span={24}>
-          <UserList activeChannelId={activeChannelId} />
+          <UserList />
         </Col>
       </Wrapper>
     </>
