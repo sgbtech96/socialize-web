@@ -6,10 +6,10 @@ import Icon from "react-icons-kit";
 import { user } from "react-icons-kit/feather/user";
 import { logOut } from "react-icons-kit/feather/logOut";
 import ProfileModal from "./ProfileModal";
-import { get } from "../../../../utils/request";
+import { get } from "../../../utils/request";
 import { useHistory } from "react-router-dom";
-import { SpinnerContext } from "../../../../utils/contexts/SpinnerContext";
-import { SocketContext } from "../../../../utils/contexts/SocketContext";
+import { SpinnerContext } from "../../../utils/contexts/SpinnerContext";
+import { SocketContext } from "../../../utils/contexts/SocketContext";
 
 const AvatarDropdown = ({ children }) => {
   const socket = useContext(SocketContext);

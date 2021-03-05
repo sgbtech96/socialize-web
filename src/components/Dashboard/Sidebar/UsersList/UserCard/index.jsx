@@ -48,9 +48,11 @@ const UserCard = ({
   useEffect(() => {
     socket.on("USER_CAME_ONLINE", (userHandle) => {
       if (userHandle === handle) setActive(true);
+      Emitter.emit("USER_CAME_ONLINE", userHandle);
     });
     socket.on("USER_WENT_OFFLINE", (userHandle) => {
       if (userHandle === handle) setActive(false);
+      Emitter.emit("USER_WENT_OFFLINE", userHandle);
     });
     return () => {
       socket.off("USER_CAME_ONLINE");
@@ -94,7 +96,7 @@ const UserCard = ({
       <Col span={7} align="end">
         {isFriend && unreadCount > 0 && (
           <span className="medium-12 unread-box">
-            <span className="unread-count medium-10">{unreadCount}</span>
+            <span className="medium-10 unread-count">{unreadCount}</span>
           </span>
         )}
         {!isFriend &&

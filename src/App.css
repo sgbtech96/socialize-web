@@ -41,6 +41,16 @@
   font-family: "Open Sans", sans-serif;
 }
 
+html {
+  font-size: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  html {
+    font-size: 9px;
+  }
+}
+
 body {
   background-color: var(--grey);
 }
@@ -61,134 +71,134 @@ body {
 }
 
 .extra-bold-60 {
-  font-size: 60px;
+  font-size: 6rem;
   font-weight: 800;
 }
 .extra-bold-48 {
-  font-size: 48px;
+  font-size: 4.8rem;
   font-weight: 800;
 }
 .extra-bold-36 {
-  font-size: 36px;
+  font-size: 3.6rem;
   font-weight: 800;
 }
 .extra-bold-24 {
-  font-size: 24px;
+  font-size: 2.4rem;
   font-weight: 800;
 }
 .extra-bold-18 {
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 800;
 }
 .extra-bold-15 {
-  font-size: 15px;
+  font-size: 1.5rem;
   font-weight: 800;
 }
 .extra-bold-12 {
-  font-size: 12px;
+  font-size: 1.2rem;
   font-weight: 800;
 }
 .extra-bold-10 {
-  font-size: 10px;
+  font-size: 1rem;
   font-weight: 800;
 }
 
 .bold-60 {
-  font-size: 60px;
+  font-size: 6rem;
   font-weight: 700;
 }
 .bold-48 {
-  font-size: 48px;
+  font-size: 4.8rem;
   font-weight: 700;
 }
 .bold-36 {
-  font-size: 36px;
+  font-size: 3.6rem;
   font-weight: 700;
 }
 .bold-24 {
-  font-size: 24px;
+  font-size: 2.4rem;
   font-weight: 700;
 }
 .bold-18 {
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 700;
 }
 .bold-15 {
-  font-size: 15px;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 .bold-12 {
-  font-size: 12px;
+  font-size: 1.2rem;
   font-weight: 700;
 }
 .bold-10 {
-  font-size: 10px;
+  font-size: 1rem;
   font-weight: 700;
 }
 
 .medium-60 {
-  font-size: 60px;
+  font-size: 6rem;
   font-weight: 600;
 }
 .medium-48 {
-  font-size: 48px;
+  font-size: 4.8rem;
   font-weight: 600;
 }
 .medium-36 {
-  font-size: 36px;
+  font-size: 3.6rem;
   font-weight: 600;
 }
 .medium-24 {
-  font-size: 24px;
+  font-size: 2.4rem;
   font-weight: 600;
 }
 .medium-18 {
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 600;
 }
 .medium-15 {
-  font-size: 15px;
+  font-size: 1.5rem;
   font-weight: 600;
 }
 .medium-12 {
-  font-size: 12px;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 .medium-10 {
-  font-size: 10px;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .normal-60 {
-  font-size: 60px;
+  font-size: 6rem;
   font-weight: 400;
 }
 .normal-48 {
-  font-size: 48px;
+  font-size: 4.8rem;
   font-weight: 400;
 }
 .normal-36 {
-  font-size: 36px;
+  font-size: 3.6rem;
   font-weight: 400;
 }
 .normal-24 {
-  font-size: 24px;
+  font-size: 2.4rem;
   font-weight: 400;
 }
 .normal-18 {
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 400;
 }
 .normal-15 {
-  font-size: 15px;
+  font-size: 1.5rem;
   font-weight: 400;
 }
 .normal-12 {
-  font-size: 12px;
+  font-size: 1.2rem;
   font-weight: 400;
 }
 .normal-10 {
-  font-size: 10px;
+  font-size: 1rem;
   font-weight: 400;
 }
 

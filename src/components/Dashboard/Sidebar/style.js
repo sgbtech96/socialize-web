@@ -3,10 +3,10 @@ import { Col } from "antd";
 export const Wrapper = styled(Col)`
   background-color: var(--white);
   height: calc(100vh - 24px - 84px);
-  padding: 12px 24px;
-  @media screen and (max-width: 400px) {
-    padding: 4px 8px;
+  @media only screen and (max-width: 768px) {
+    height: calc(100vh - 84px);
   }
+  padding: 12px 24px;
   .light-black {
     color: var(--black-85);
   }

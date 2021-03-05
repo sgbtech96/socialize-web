@@ -33,6 +33,7 @@ export const Wrapper = styled(Row)`
     border-radius: 50%;
     background-color: var(--blue);
     .unread-count {
+      font-size: 10px !important;
       position: absolute;
       color: var(--white);
       top: 50%;

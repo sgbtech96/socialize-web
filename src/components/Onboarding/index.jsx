@@ -21,7 +21,7 @@ const withGrid = (component) => (
 );
 const Onboarding = () => {
   const { path, url } = useRouteMatch();
-  console.log(`url: ${url}, path: ${path}`);
+  // console.log(`url: ${url}, path: ${path}`);
   return (
     <Wrapper justify="center" align="middle">
       <Switch>

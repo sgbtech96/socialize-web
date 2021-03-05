@@ -22,6 +22,7 @@ const Wrapper = styled(Col)`
       overflow-wrap: break-word;
       color: ${(props) => (props.isItMe ? "var(--white)" : "var(--black-85)")};
       letter-spacing: 0.4px;
+      font-size: 12px !important;
     }
   }
   .light-black {
@@ -30,15 +31,18 @@ const Wrapper = styled(Col)`
   .fade {
     color: var(--black-65);
   }
+  .size-10 {
+    font-size: 10px !important;
+  }
 `;
-const formatTime = (timeStamp) => moment(timeStamp).format("h:mm a");
+const formatTime = (timeStamp) => moment(timeStamp).format("L h:mm a");
 const ChatBubble = ({ chat: { senderHandle, text, timeStamp } }) => {
   let isItMe = senderHandle === decodeJWT().handle;
   return (
     <Wrapper isItMe={isItMe} align={isItMe ? "" : "end"}>
       <div className={isItMe ? "ml-10" : "mr-10"}>
         <span className="mr-15 bold-15 light-black">{senderHandle}</span>
-        <span className="normal-10 fade">{formatTime(timeStamp)}</span>
+        <span className="normal-10 fade size-10">{formatTime(timeStamp)}</span>
       </div>
       <span className="message-box mt-5">
         <div className="medium-12 message">{text}</div>

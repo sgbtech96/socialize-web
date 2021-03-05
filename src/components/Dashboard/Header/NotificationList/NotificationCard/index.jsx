@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Row, Col, message } from "antd";
 import { Icon } from "react-icons-kit";
 import { checkCircle } from "react-icons-kit/feather/checkCircle";
-import { SocketContext } from "../../../../../../utils/contexts/SocketContext";
+import { SocketContext } from "../../../../../utils/contexts/SocketContext";
 
 const Wrapper = styled(Row)`
   .user-avatar {
@@ -12,8 +12,6 @@ const Wrapper = styled(Row)`
     border-radius: 50%;
   }
   .accept-btn {
-    align-self: "flex-end";
-    cursor: ${(props) => (props.accepted ? "" : "pointer")};
     .check-icon {
       color: ${(props) => (props.accepted ? "var(--green)" : "var(--blue)")};
     }
@@ -31,8 +29,8 @@ const NotificationCard = ({ user, type }) => {
     );
   };
   return (
-    <Wrapper wrap={false} gutter={16} accepted={accepted}>
-      <Col flex="64px">
+    <Wrapper wrap={false} accepted={accepted} align="middle">
+      <Col flex="68px">
         <img
           src={user.imageUrl || "/avatar-placeholder.webp"}
           alt="avatar"
@@ -40,22 +38,23 @@ const NotificationCard = ({ user, type }) => {
         />
       </Col>
       <Col flex="auto">
-        <div>
+        <div className="medium-15">
           @{user.handle}{" "}
           {type === "invite"
             ? "sent you a connection request"
             : "accepted your invitation"}
         </div>
         {type === "invite" && (
-          <div
-            className="accept-btn"
+          <Col
+            className="accept-btn mt-5"
+            align="end"
             onClick={() => {
               if (accepted) return;
               handleInviteAccept();
             }}
           >
             <Icon icon={checkCircle} size={24} className="check-icon" />
-          </div>
+          </Col>
         )}
       </Col>
     </Wrapper>

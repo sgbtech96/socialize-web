@@ -17,9 +17,19 @@ const Wrapper = styled(Row)`
   .tool-icon {
     background-color: var(--blue-subtle);
     color: var(--blue);
-    padding: 16px;
+    padding: 8px;
     border-radius: 50%;
     cursor: pointer;
+  }
+  @media only screen and (max-width: 768px) {
+    padding: 0 6px;
+    .ant-input {
+      border: none;
+      padding: 12px 4px;
+    }
+    .tool-icon {
+      padding: 6px;
+    }
   }
 `;
 
@@ -27,22 +37,24 @@ const TypingTool = ({ activeChannelId }) => {
   const socket = useContext(SocketContext);
   const [text, setText] = useState("");
   const handleMessageSend = () => {
+    if (!activeChannelId) return;
     let textMessage = text.trim();
     if (!textMessage.length) return;
     socket.emit("SEND_MESSAGE", activeChannelId, textMessage);
     setText("");
   };
   return (
-    <Wrapper gutter={8} align="middle" justify="space-between">
-      <Col span={22}>
+    <Wrapper align="middle" justify="space-between">
+      <Col span={21}>
         <Input
           placeholder="Write your message..."
           value={text}
           onChange={(e) => setText(e.target.value)}
           onPressEnter={handleMessageSend}
+          disabled={!activeChannelId}
         />
       </Col>
-      <Col span={2} align="middle">
+      <Col span={3} align="middle">
         <Icon
           icon={send}
           size={20}

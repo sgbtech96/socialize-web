@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 // import PropTypes from "prop-types";
 import { Modal, Form, Input, Button, Col, message, Progress } from "antd";
-import { put } from "../../../../../utils/request";
-import Emitter from "../../../../../utils/emitter";
-import { storage } from "../../../../../utils/firebase";
+import { put } from "../../../../utils/request";
+import Emitter from "../../../../utils/emitter";
+import { storage } from "../../../../utils/firebase";
 import Icon from "react-icons-kit";
 import { pencil } from "react-icons-kit/fa/pencil";
 import styled from "styled-components";
-import { SpinnerContext } from "../../../../../utils/contexts/SpinnerContext";
+import { SpinnerContext } from "../../../../utils/contexts/SpinnerContext";
 import { connect } from "react-redux";
 
 const Wrapper = styled.div`
@@ -116,7 +116,7 @@ const ProfileModal = ({
                   <input
                     type="file"
                     onChange={(e) => {
-                      console.log(e.target.files?.[0]);
+                      // console.log(e.target.files?.[0]);
                       handleUpload(e.target.files?.[0]);
                     }}
                   />

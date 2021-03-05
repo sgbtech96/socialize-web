@@ -13,6 +13,9 @@ import { setMobileWeb } from "../../actions/display";
 let socket = null;
 const Wrapper = styled(Row)`
   padding: 12px;
+  @media only screen and (max-width: 768px) {
+    padding: 0;
+  }
   .hide {
     display: none;
   }
@@ -20,7 +23,7 @@ const Wrapper = styled(Row)`
 const Dashboard = ({ mobileWeb, activeSection, setMobileWeb }) => {
   const setLoading = useContext(SpinnerContext);
   const getDeviceSize = () => {
-    if (window.innerWidth < 764) {
+    if (window.innerWidth < 768) {
       setMobileWeb(true);
     }
   };
@@ -47,10 +50,10 @@ const Dashboard = ({ mobileWeb, activeSection, setMobileWeb }) => {
   return (
     socket && (
       <SocketContext.Provider value={socket}>
-        <Wrapper>
+        <Wrapper justify="center">
           <Col
             xs={24}
-            sm={20}
+            sm={18}
             md={10}
             lg={8}
             xl={8}
@@ -61,7 +64,7 @@ const Dashboard = ({ mobileWeb, activeSection, setMobileWeb }) => {
           </Col>
           <Col
             xs={24}
-            sm={24}
+            sm={18}
             md={14}
             lg={16}
             xl={16}

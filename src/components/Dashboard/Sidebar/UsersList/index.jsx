@@ -45,7 +45,7 @@ const UsersList = ({ friends, activeChannelId }) => {
     if (senderInfo) setUsers([senderInfo, ...tmpUsers]);
 
     // Increment unread count by 1
-    console.log(users, senderInfo?.channelId, activeChannelId);
+    // console.log(users, senderInfo?.channelId, activeChannelId);
     if (senderInfo?.channelId !== activeChannelId)
       Emitter.emit("INCREMENT_UNREAD_COUNT", senderHandle);
   };
@@ -63,9 +63,10 @@ const UsersList = ({ friends, activeChannelId }) => {
       Emitter.emit("INCOMING_MESSAGE", { message, channelId });
     });
 
-    socket.on("REQUEST_ACCEPTED", ({ user }) => {
+    socket.on("REQUEST_ACCEPTED", ({ user, acceptedBy }) => {
       setUsers((prevState) => [...prevState, user]);
       socket.emit("JOIN_CHANNEL", user.channelId);
+      Emitter.emit("REQUEST_ACCEPTED", { user, acceptedBy });
     });
 
     // Un-subscribing from event listeners
