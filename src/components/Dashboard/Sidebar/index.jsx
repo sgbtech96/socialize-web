@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 // import PropTypes from "prop-types";
-import { Wrapper } from "./style";
-import { Row, Col } from "antd";
-import TrendingSwipe from "./TrendingSwipe";
-import SwitchButton from "./SwitchButton";
-import UserList from "./UsersList";
-import Header from "../Header";
+import { Wrapper } from './style';
+import { Row, Col } from 'antd';
+import TrendingSwipe from './TrendingSwipe';
+import SwitchButton from './SwitchButton';
+import UserList from './UsersList';
+import Header from '../Header';
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState(2);
@@ -24,23 +24,23 @@ const Sidebar = () => {
         <Row className="mt-10" justify="center">
           <Col span={8} onClick={() => setActiveTab(1)}>
             <SwitchButton
-              type={activeTab === 1 ? "active" : "inactive"}
+              type={activeTab === 1 ? 'active' : 'inactive'}
               text="Direct"
               cta="user"
             />
           </Col>
           <Col offset={1} span={8} onClick={() => setActiveTab(2)}>
             <SwitchButton
-              type={activeTab === 2 ? "active" : "inactive"}
+              type={activeTab === 2 ? 'active' : 'inactive'}
               text="Invite"
               cta="userPlus"
             />
           </Col>
         </Row>
-        <Col className={`mt-5 ${activeTab === 2 ? "hide" : ""}`} span={24}>
+        <Col className={`mt-5 ${activeTab === 2 ? 'hide' : ''}`} span={24}>
           <UserList friends />
         </Col>
-        <Col className={`mt-5 ${activeTab === 1 ? "hide" : ""}`} span={24}>
+        <Col className={`mt-5 ${activeTab === 1 ? 'hide' : ''}`} span={24}>
           <UserList />
         </Col>
       </Wrapper>

@@ -5,31 +5,31 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended",
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:prettier/recommended',
   ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 12,
-    sourceType: "module",
+    sourceType: 'module',
   },
   settings: {
     react: {
-      version: "detect",
+      version: 'detect',
     },
   },
-  plugins: ["react"],
+  plugins: ['react'],
   rules: {
-    "react/prop-types": 0,
-    "no-unused-vars": 0,
-    "no-undef": 0,
-    "no-empty": 0,
-    "react/jsx-no-duplicate-props": 0,
+    'react/prop-types': 0,
+    'no-unused-vars': 0,
+    'no-undef': 0,
+    'no-empty': 0,
+    'react/jsx-no-duplicate-props': 0,
     curly: 1,
     eqeqeq: 1,
-    "no-console": "warn",
+    'no-console': 'warn',
   },
 };

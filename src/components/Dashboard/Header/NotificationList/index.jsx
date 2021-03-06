@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Row, Dropdown, Menu, message } from "antd";
-import Icon from "react-icons-kit";
-import { ic_notifications_active } from "react-icons-kit/md/ic_notifications_active";
-import styled from "styled-components";
-import NotificationCard from "./NotificationCard";
-import { get } from "../../../../utils/request";
-import { SocketContext } from "../../../../utils/contexts/SocketContext";
-import { decodeJWT } from "../../../../utils/decodeJWT";
-import Emitter from "../../../../utils/emitter";
+import React, { useState, useEffect, useContext } from 'react';
+import { Row, Dropdown, Menu, message } from 'antd';
+import Icon from 'react-icons-kit';
+import { ic_notifications_active } from 'react-icons-kit/md/ic_notifications_active';
+import styled from 'styled-components';
+import NotificationCard from './NotificationCard';
+import { get } from '../../../../utils/request';
+import { SocketContext } from '../../../../utils/contexts/SocketContext';
+import { decodeJWT } from '../../../../utils/decodeJWT';
+import Emitter from '../../../../utils/emitter';
 
 const Wrapper = styled.div`
   .bell-icon {
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
       width: 10px;
       border: 1px solid var(--white);
       border-radius: 50%;
-      display: ${(props) => (props.alert ? "inline-block" : "none")};
+      display: ${(props) => (props.alert ? 'inline-block' : 'none')};
       background-color: var(--red);
     }
   }
@@ -35,17 +35,17 @@ const NotificationList = () => {
   const fetchInvites = async () => {
     try {
       const res = await get(`api/v1/chats/invites`);
-      if (res.type === "success") {
+      if (res.type === 'success') {
         setNotifications(res.data);
         if (res.data?.length > 0) {
           setAlert(true);
         }
       } else {
-        console.log("Error -> NotificationsList");
+        console.log('Error -> NotificationsList');
       }
     } catch (e) {
-      console.log("Error -> NotificationsList", e);
-      message.error("Something went wrong!");
+      console.log('Error -> NotificationsList', e);
+      message.error('Something went wrong!');
     }
   };
 
@@ -54,20 +54,20 @@ const NotificationList = () => {
   }, []);
 
   useEffect(() => {
-    socket.on("INCOMING_INVITE", (user) => {
-      setNotifications((prevState) => [{ user, type: "invite" }, ...prevState]);
+    socket.on('INCOMING_INVITE', (user) => {
+      setNotifications((prevState) => [{ user, type: 'invite' }, ...prevState]);
       setAlert(true);
     });
-    Emitter.on("REQUEST_ACCEPTED", ({ user, acceptedBy }) => {
+    Emitter.on('REQUEST_ACCEPTED', ({ user, acceptedBy }) => {
       if (acceptedBy === decodeJWT().handle) {
         return;
       }
-      setNotifications((prevState) => [{ user, type: "acceptance" }, ...prevState]);
+      setNotifications((prevState) => [{ user, type: 'acceptance' }, ...prevState]);
       setAlert(true);
     });
     return () => {
-      socket.off("INCOMING_INVITE");
-      Emitter.off("REQUEST_ACCEPTED");
+      socket.off('INCOMING_INVITE');
+      Emitter.off('REQUEST_ACCEPTED');
     };
   }, []);
 

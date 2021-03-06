@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Col } from "antd";
+import styled from 'styled-components';
+import { Col } from 'antd';
 export const Wrapper = styled(Col)`
   background-color: #fff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);

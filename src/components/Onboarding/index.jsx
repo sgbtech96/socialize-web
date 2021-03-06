@@ -1,14 +1,14 @@
-import React from "react";
-import { Switch, Route, Redirect, useParams, useRouteMatch } from "react-router-dom";
-import styled from "styled-components";
-import AuthCard from "./AuthCard";
-import LoginCard from "./LoginCard";
+import React from 'react';
+import { Switch, Route, Redirect, useParams, useRouteMatch } from 'react-router-dom';
+import styled from 'styled-components';
+import AuthCard from './AuthCard';
+import LoginCard from './LoginCard';
 
-import { Row, Col } from "antd";
+import { Row, Col } from 'antd';
 
 const Wrapper = styled(Row)`
   height: 100vh;
-  background-image: url("/home-background.svg");
+  background-image: url('/home-background.svg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;

@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Row, Col } from "antd";
-import styled from "styled-components";
-import Sidebar from "./Sidebar";
-import ChatArea from "./ChatArea";
-import TextTool from "./TextTool";
-import { io } from "socket.io-client";
-import { SocketContext } from "../../utils/contexts/SocketContext";
-import { SpinnerContext } from "../../utils/contexts/SpinnerContext";
-import { connect } from "react-redux";
-import { setMobileWeb } from "../../actions/display";
+import React, { useState, useEffect, useContext } from 'react';
+import { Row, Col } from 'antd';
+import styled from 'styled-components';
+import Sidebar from './Sidebar';
+import ChatArea from './ChatArea';
+import TextTool from './TextTool';
+import { io } from 'socket.io-client';
+import { SocketContext } from '../../utils/contexts/SocketContext';
+import { SpinnerContext } from '../../utils/contexts/SpinnerContext';
+import { connect } from 'react-redux';
+import { setMobileWeb } from '../../actions/display';
 
 let socket = null;
 const Wrapper = styled(Row)`
@@ -36,15 +36,15 @@ const Dashboard = ({ mobileWeb, activeSection, setMobileWeb }) => {
     setLoading(true);
     socket = io(`${process.env.REACT_APP_BACKEND_BASE_URL}`, {
       auth: {
-        token: `Bearer ${localStorage.getItem("jwt")}`,
+        token: `Bearer ${localStorage.getItem('jwt')}`,
       },
     });
-    socket?.on("connect", () => {
+    socket?.on('connect', () => {
       setLoading(false);
-      socket.emit("ONLINE");
+      socket.emit('ONLINE');
     });
     return () => {
-      socket?.off("connect");
+      socket?.off('connect');
     };
   }, []);
   return (
@@ -58,8 +58,7 @@ const Dashboard = ({ mobileWeb, activeSection, setMobileWeb }) => {
             lg={8}
             xl={8}
             xxl={6}
-            className={mobileWeb && activeSection === 2 ? "hide" : ""}
-          >
+            className={mobileWeb && activeSection === 2 ? 'hide' : ''}>
             <Sidebar />
           </Col>
           <Col
@@ -69,8 +68,7 @@ const Dashboard = ({ mobileWeb, activeSection, setMobileWeb }) => {
             lg={16}
             xl={16}
             xxl={18}
-            className={mobileWeb && activeSection === 1 ? "hide" : ""}
-          >
+            className={mobileWeb && activeSection === 1 ? 'hide' : ''}>
             <ChatArea />
             <TextTool />
           </Col>

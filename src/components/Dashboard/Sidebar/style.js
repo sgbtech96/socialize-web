@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Col } from "antd";
+import styled from 'styled-components';
+import { Col } from 'antd';
 export const Wrapper = styled(Col)`
   background-color: var(--white);
   height: calc(100vh - 24px - 84px);

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Row } from "antd";
+import styled from 'styled-components';
+import { Row } from 'antd';
 export const Wrapper = styled(Row)`
   padding: 10px 20px;
   max-width: 400px;
@@ -11,8 +11,8 @@ export const Wrapper = styled(Row)`
   }
   ${(props) =>
     props.selected
-      ? "background-color: var(--blue-subtle);border-left: 4px solid var(--blue);padding-left: 16px;"
-      : ""}
+      ? 'background-color: var(--blue-subtle);border-left: 4px solid var(--blue);padding-left: 16px;'
+      : ''}
 
   .light-black {
     color: var(--black-65);
@@ -54,7 +54,7 @@ export const Wrapper = styled(Row)`
       border-radius: 50%;
       display: inline-block;
       background-color: ${(props) =>
-        props.active ? "var(--green)" : "var(--grey)"};
+        props.active ? 'var(--green)' : 'var(--grey)'};
     }
   }
   .green-check {

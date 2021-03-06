@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import { get } from "../../../utils/request";
-import ChatBubble from "./ChatBubble";
-import styled from "styled-components";
-import { Col } from "antd";
-import Emitter from "../../../utils/emitter";
-import Header from "../Header";
-import { connect } from "react-redux";
-import { List } from "react-content-loader";
+import React, { useEffect, useState, useRef } from 'react';
+import { get } from '../../../utils/request';
+import ChatBubble from './ChatBubble';
+import styled from 'styled-components';
+import { Col } from 'antd';
+import Emitter from '../../../utils/emitter';
+import Header from '../Header';
+import { connect } from 'react-redux';
+import { List } from 'react-content-loader';
 
 const Wrapper = styled(Col)`
   height: calc(100vh - 24px - 84px - 72px);
@@ -25,9 +25,9 @@ const ChatArea = ({ activeChannelId }) => {
   const [chats, setChats] = useState(null);
   const fetchChats = async () => {
     const res = await get(`api/v1/chats/chat/${activeChannelId}`);
-    if (res.type === "success") {
+    if (res.type === 'success') {
       setChats(res.data || []);
-      dummyDivRef.current.scrollIntoView({ behavior: "smooth" });
+      dummyDivRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
   const handleIncomingMessage = (message, channelId) => {
@@ -35,7 +35,7 @@ const ChatArea = ({ activeChannelId }) => {
       return;
     }
     setChats((prevState) => [...prevState, message]);
-    dummyDivRef.current.scrollIntoView({ behavior: "smooth" });
+    dummyDivRef.current.scrollIntoView({ behavior: 'smooth' });
   };
   useEffect(() => {
     if (!activeChannelId) {
@@ -45,11 +45,11 @@ const ChatArea = ({ activeChannelId }) => {
   }, [activeChannelId]);
 
   useEffect(() => {
-    Emitter.on("INCOMING_MESSAGE", ({ message, channelId }) => {
+    Emitter.on('INCOMING_MESSAGE', ({ message, channelId }) => {
       handleIncomingMessage(message, channelId);
     });
     return () => {
-      Emitter.off("INCOMING_MESSAGE");
+      Emitter.off('INCOMING_MESSAGE');
     };
   }, [activeChannelId]);
 
@@ -60,7 +60,7 @@ const ChatArea = ({ activeChannelId }) => {
         {chats
           ? chats.map((chat, idx) => {
               return (
-                <div key={idx} className={idx > 0 ? "mt-15" : ""}>
+                <div key={idx} className={idx > 0 ? 'mt-15' : ''}>
                   <ChatBubble chat={chat} />
                 </div>
               );
@@ -69,8 +69,8 @@ const ChatArea = ({ activeChannelId }) => {
             skeletons.map((i) => (
               <Col key={i}>
                 <List
-                  backgroundColor={"var(--grey-subtle)"}
-                  foregroundColor={"var(--grey)"}
+                  backgroundColor={'var(--grey-subtle)'}
+                  foregroundColor={'var(--grey)'}
                 />
               </Col>
             ))}

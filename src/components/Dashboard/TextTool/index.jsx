@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
-import Icon from "react-icons-kit";
-import { send } from "react-icons-kit/fa/send";
-import styled from "styled-components";
-import { Row, Col, Input } from "antd";
-import { SocketContext } from "../../../utils/contexts/SocketContext";
-import { connect } from "react-redux";
+import React, { useContext, useState } from 'react';
+import Icon from 'react-icons-kit';
+import { send } from 'react-icons-kit/fa/send';
+import styled from 'styled-components';
+import { Row, Col, Input } from 'antd';
+import { SocketContext } from '../../../utils/contexts/SocketContext';
+import { connect } from 'react-redux';
 
 const Wrapper = styled(Row)`
   height: 72px;
@@ -35,7 +35,7 @@ const Wrapper = styled(Row)`
 
 const TypingTool = ({ activeChannelId }) => {
   const socket = useContext(SocketContext);
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const handleMessageSend = () => {
     if (!activeChannelId) {
       return;
@@ -44,8 +44,8 @@ const TypingTool = ({ activeChannelId }) => {
     if (!textMessage.length) {
       return;
     }
-    socket.emit("SEND_MESSAGE", activeChannelId, textMessage);
-    setText("");
+    socket.emit('SEND_MESSAGE', activeChannelId, textMessage);
+    setText('');
   };
   return (
     <Wrapper align="middle" justify="space-between">

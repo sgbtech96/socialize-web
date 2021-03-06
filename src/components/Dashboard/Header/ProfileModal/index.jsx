@@ -1,17 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 // import PropTypes from "prop-types";
-import { Modal, Form, Input, Button, Col, message, Progress } from "antd";
-import { put } from "../../../../utils/request";
-import Emitter from "../../../../utils/emitter";
-import { storage } from "../../../../utils/firebase";
-import Icon from "react-icons-kit";
-import { pencil } from "react-icons-kit/fa/pencil";
-import styled from "styled-components";
-import { SpinnerContext } from "../../../../utils/contexts/SpinnerContext";
-import { connect } from "react-redux";
+import { Modal, Form, Input, Button, Col, message, Progress } from 'antd';
+import { put } from '../../../../utils/request';
+import Emitter from '../../../../utils/emitter';
+import { storage } from '../../../../utils/firebase';
+import Icon from 'react-icons-kit';
+import { pencil } from 'react-icons-kit/fa/pencil';
+import styled from 'styled-components';
+import { SpinnerContext } from '../../../../utils/contexts/SpinnerContext';
+import { connect } from 'react-redux';
 
 const Wrapper = styled.div`
-  input[type="file"] {
+  input[type='file'] {
     opacity: 0;
     width: 100%;
   }
@@ -50,15 +50,15 @@ const ProfileModal = ({
     setUploading(true);
     const uploadTask = storage.ref(`images/${image.name}`).put(image);
     uploadTask.on(
-      "state_changed",
+      'state_changed',
       (snapshot) => {},
       (error) => {
-        console.log("Error while uploading image!");
+        console.log('Error while uploading image!');
         setUploading(false);
       },
       () => {
         storage
-          .ref("images")
+          .ref('images')
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
@@ -71,7 +71,7 @@ const ProfileModal = ({
   };
   const onSave = async (values) => {
     if (uploading) {
-      message.warning("Please wait! Your image is being uploaded!");
+      message.warning('Please wait! Your image is being uploaded!');
       return;
     }
     setIsModalVisible(false);
@@ -82,15 +82,15 @@ const ProfileModal = ({
         imageUrl: userImageUrl,
       });
       setLoading(false);
-      if (res.type === "success") {
+      if (res.type === 'success') {
         setDisabled(true);
-        Emitter.emit("PROFILE_EDITED");
+        Emitter.emit('PROFILE_EDITED');
       } else {
-        console.log("Error -> ProfileModal");
+        console.log('Error -> ProfileModal');
       }
     } catch (e) {
-      console.log("Error -> ProfileModal", e);
-      message.error("Something went wrong!");
+      console.log('Error -> ProfileModal', e);
+      message.error('Something went wrong!');
     }
   };
   return (
@@ -98,13 +98,12 @@ const ProfileModal = ({
       visible={isModalVisible}
       onCancel={() => setIsModalVisible(false)}
       footer={null}
-      className="profile-modal"
-    >
+      className="profile-modal">
       <Wrapper>
         <Col span={24} align="middle">
           <div className="img-container">
             <img
-              src={userImageUrl || "/avatar-placeholder.webp"}
+              src={userImageUrl || '/avatar-placeholder.webp'}
               alt="user-avatar"
               height={150}
               width={140}
@@ -133,8 +132,7 @@ const ProfileModal = ({
           initialValues={{
             name,
             tagline,
-          }}
-        >
+          }}>
           <Form.Item
             className="mt-40"
             name="name"
@@ -142,10 +140,9 @@ const ProfileModal = ({
             rules={[
               {
                 required: true,
-                message: "Name is a required field!",
+                message: 'Name is a required field!',
               },
-            ]}
-          >
+            ]}>
             <Input disabled={disabled} />
           </Form.Item>
           <Form.Item name="tagline" label="Tagline">
@@ -166,15 +163,13 @@ const ProfileModal = ({
             span={24}
             align="middle"
             style={{
-              marginTop: "44px",
-              marginBottom: "24px",
-            }}
-          >
+              marginTop: '44px',
+              marginBottom: '24px',
+            }}>
             <Button
               type="primary"
               onClick={() => setDisabled(false)}
-              className="medium-18"
-            >
+              className="medium-18">
               Edit
             </Button>
           </Col>

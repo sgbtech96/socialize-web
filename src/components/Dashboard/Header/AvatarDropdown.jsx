@@ -1,14 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 // import PropTypes from "prop-types";
-import { Row, Dropdown, Menu, message } from "antd";
-import Icon from "react-icons-kit";
-import { user } from "react-icons-kit/feather/user";
-import { logOut } from "react-icons-kit/feather/logOut";
-import ProfileModal from "./ProfileModal";
-import { get } from "../../../utils/request";
-import { useHistory } from "react-router-dom";
-import { SpinnerContext } from "../../../utils/contexts/SpinnerContext";
-import { SocketContext } from "../../../utils/contexts/SocketContext";
+import { Row, Dropdown, Menu, message } from 'antd';
+import Icon from 'react-icons-kit';
+import { user } from 'react-icons-kit/feather/user';
+import { logOut } from 'react-icons-kit/feather/logOut';
+import ProfileModal from './ProfileModal';
+import { get } from '../../../utils/request';
+import { useHistory } from 'react-router-dom';
+import { SpinnerContext } from '../../../utils/contexts/SpinnerContext';
+import { SocketContext } from '../../../utils/contexts/SocketContext';
 
 const AvatarDropdown = ({ children }) => {
   const socket = useContext(SocketContext);
@@ -20,16 +20,16 @@ const AvatarDropdown = ({ children }) => {
     try {
       const res = await get(`api/v1/auth/logout`);
       setLoading(false);
-      if (res.type === "success") {
-        localStorage.removeItem("jwt");
+      if (res.type === 'success') {
+        localStorage.removeItem('jwt');
         socket.disconnect();
         history.push(`/onboarding/login`);
       } else {
-        console.log("Error -> AvatarDropDown");
+        console.log('Error -> AvatarDropDown');
       }
     } catch (e) {
-      console.log("Error -> AvatarDropDown", e);
-      message.error("Something went wrong!");
+      console.log('Error -> AvatarDropDown', e);
+      message.error('Something went wrong!');
     }
   };
   const menu = (
