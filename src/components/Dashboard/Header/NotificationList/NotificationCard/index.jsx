@@ -49,7 +49,9 @@ const NotificationCard = ({ user, type }) => {
             className="accept-btn mt-5"
             align="end"
             onClick={() => {
-              if (accepted) return;
+              if (accepted) {
+                return;
+              }
               handleInviteAccept();
             }}
           >

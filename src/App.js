@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState } from "react";
 import { SpinnerContext } from "./utils/contexts/SpinnerContext";
 import "antd/dist/antd.css";

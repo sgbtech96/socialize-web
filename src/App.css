@@ -41,6 +41,8 @@
   font-family: "Open Sans", sans-serif;
 }
 
+/* responsive font setup */
+
 html {
   font-size: 10px;
 }
@@ -54,6 +56,8 @@ html {
 body {
   background-color: var(--grey);
 }
+
+/* color definitions */
 
 :root {
   --blue: #1c9dea;
@@ -69,6 +73,8 @@ body {
   --black-65: rgba(0, 0, 0, 0.65);
   --black-45: rgba(0, 0, 0, 0.45);
 }
+
+/* typography */
 
 .extra-bold-60 {
   font-size: 6rem;
@@ -201,6 +207,8 @@ body {
   font-size: 1rem;
   font-weight: 400;
 }
+
+/* margin definitions */
 
 .ml-5 {
   margin-left: 5px;
@@ -373,6 +381,8 @@ body {
   -webkit-box-orient: vertical;
 }
 
+/* trim text */
+
 .tc-2 {
   display: -webkit-box;
   overflow: hidden;
@@ -400,6 +410,8 @@ body {
   text-overflow: ellipsis;
   max-width: 90%;
 }
+
+/* general */
 
 .uppercase {
   text-transform: uppercase;

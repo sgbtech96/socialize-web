@@ -47,8 +47,9 @@ const LoginCard = ({ type }) => {
 
   // For "register" redirect to /send-otp if no otp sent
   useEffect(() => {
-    if (type === "register" && !sessionStorage.getItem("onboarding-email"))
+    if (type === "register" && !sessionStorage.getItem("onboarding-email")) {
       history.push("send-otp");
+    }
   }, []);
 
   return (
@@ -176,8 +177,11 @@ const LoginCard = ({ type }) => {
           <span
             className="link"
             onClick={() => {
-              if (type === "login") history.push("send-otp");
-              else history.push("login");
+              if (type === "login") {
+                history.push("send-otp");
+              } else {
+                history.push("login");
+              }
             }}
           >
             {type === "login" ? "Register here" : "Login"}

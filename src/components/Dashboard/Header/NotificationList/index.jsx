@@ -37,8 +37,12 @@ const NotificationList = () => {
       const res = await get(`api/v1/chats/invites`);
       if (res.type === "success") {
         setNotifications(res.data);
-        if (res.data?.length > 0) setAlert(true);
-      } else console.log("Error -> NotificationsList");
+        if (res.data?.length > 0) {
+          setAlert(true);
+        }
+      } else {
+        console.log("Error -> NotificationsList");
+      }
     } catch (e) {
       console.log("Error -> NotificationsList", e);
       message.error("Something went wrong!");
@@ -55,7 +59,9 @@ const NotificationList = () => {
       setAlert(true);
     });
     Emitter.on("REQUEST_ACCEPTED", ({ user, acceptedBy }) => {
-      if (acceptedBy === decodeJWT().handle) return;
+      if (acceptedBy === decodeJWT().handle) {
+        return;
+      }
       setNotifications((prevState) => [{ user, type: "acceptance" }, ...prevState]);
       setAlert(true);
     });

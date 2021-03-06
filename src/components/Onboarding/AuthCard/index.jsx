@@ -21,7 +21,9 @@ const generateEncryptedEmail = (email) => {
   while (i < len) {
     email = email.replaceAt(i, "*");
     i += 1;
-    if (i > 4) break;
+    if (i > 4) {
+      break;
+    }
   }
   return email;
 };
@@ -42,10 +44,14 @@ const AuthCard = ({ type }) => {
       const res = await post(`api/v1/onboarding/${type}Otp`, payload);
       setLoading(false);
       if (res.type === "success") {
-        if (type === "send") history.push("verify-otp");
-        else history.push("register");
-      } else if (res.type === "log") setLog(res.message);
-      else {
+        if (type === "send") {
+          history.push("verify-otp");
+        } else {
+          history.push("register");
+        }
+      } else if (res.type === "log") {
+        setLog(res.message);
+      } else {
         console.log(`Error -> AuthCard -> ${res.error}`);
         message.error("Something went wrong!");
       }
@@ -66,7 +72,9 @@ const AuthCard = ({ type }) => {
   // Redirect to /send-otp if no otp was sent
   useEffect(() => {
     if (type === "verify") {
-      if (!sessionStorage.getItem("onboarding-email")) history.push("send-otp");
+      if (!sessionStorage.getItem("onboarding-email")) {
+        history.push("send-otp");
+      }
     }
   }, []);
 

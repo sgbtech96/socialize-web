@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useEffect, useState } from "react";
 // import PropTypes from "prop-types";
 import { Row, message } from "antd";
@@ -87,18 +86,26 @@ const Header = ({
     try {
       const res = await get(`api/v1/chats/isOnline/${activeFriend?.handle}`);
       if (res.type === "success") {
-        if (res.data.online) setActive(true);
+        if (res.data.online) {
+          setActive(true);
+        }
       }
     } catch (e) {}
   };
 
   useEffect(() => {
-    if (!activeFriend) return;
+    if (!activeFriend) {
+      return;
+    }
     Emitter.on("USER_CAME_ONLINE", (userHandle) => {
-      if (userHandle === activeFriend?.handle) setActive(true);
+      if (userHandle === activeFriend?.handle) {
+        setActive(true);
+      }
     });
     Emitter.on("USER_WENT_OFFLINE", (userHandle) => {
-      if (userHandle === activeFriend?.handle) setActive(false);
+      if (userHandle === activeFriend?.handle) {
+        setActive(false);
+      }
     });
     return () => {
       Emitter.off("USER_CAME_ONLINE");
@@ -107,11 +114,15 @@ const Header = ({
   }, [activeFriend]);
 
   useEffect(() => {
-    if (type === "sidebar") fetchMyProfile();
+    if (type === "sidebar") {
+      fetchMyProfile();
+    }
   }, []);
 
   useEffect(() => {
-    if (!activeFriend.handle) return;
+    if (!activeFriend.handle) {
+      return;
+    }
     fetchActiveStatus();
   }, [activeFriend]);
 
@@ -176,7 +187,7 @@ const Header = ({
             <div className="mr-20">
               <img src="/logo.png" height={42} width={42} />
             </div>
-            <div className="bold-18">shhh!</div>
+            <div className="bold-18">Socialize</div>
           </Row>
         )}
         {((type === "sidebar" && mobileWeb) ||

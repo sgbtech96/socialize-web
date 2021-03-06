@@ -34,20 +34,27 @@ const UsersList = ({ friends, activeChannelId }) => {
 
   const handleIncomingMessage = (message) => {
     const { senderHandle } = message;
-    if (decodeJWT().handle === senderHandle) return;
+    if (decodeJWT().handle === senderHandle) {
+      return;
+    }
     let senderInfo = null;
     let tmpUsers = [];
     users.forEach((user) => {
       if (user.handle === senderHandle) {
         senderInfo = user;
-      } else tmpUsers.push(user);
+      } else {
+        tmpUsers.push(user);
+      }
     });
-    if (senderInfo) setUsers([senderInfo, ...tmpUsers]);
+    if (senderInfo) {
+      setUsers([senderInfo, ...tmpUsers]);
+    }
 
     // Increment unread count by 1
     // console.log(users, senderInfo?.channelId, activeChannelId);
-    if (senderInfo?.channelId !== activeChannelId)
+    if (senderInfo?.channelId !== activeChannelId) {
       Emitter.emit("INCREMENT_UNREAD_COUNT", senderHandle);
+    }
   };
 
   useEffect(() => {
@@ -56,7 +63,9 @@ const UsersList = ({ friends, activeChannelId }) => {
 
   // Adding socket event listeners to friends list only
   useEffect(() => {
-    if (!friends) return;
+    if (!friends) {
+      return;
+    }
     // Incoming message from a friend
     socket.on("INCOMING_MESSAGE", ({ message, channelId }) => {
       handleIncomingMessage(message);

@@ -35,23 +35,31 @@ const UserCard = ({
     try {
       const res = await get(`api/v1/chats/isOnline/${handle}`);
       if (res.type === "success") {
-        if (res.data.online) setActive(true);
+        if (res.data.online) {
+          setActive(true);
+        }
       }
     } catch (e) {}
   };
 
   useEffect(() => {
-    if (!handle) return;
+    if (!handle) {
+      return;
+    }
     fetchActiveStatus();
   }, [handle]);
 
   useEffect(() => {
     socket.on("USER_CAME_ONLINE", (userHandle) => {
-      if (userHandle === handle) setActive(true);
+      if (userHandle === handle) {
+        setActive(true);
+      }
       Emitter.emit("USER_CAME_ONLINE", userHandle);
     });
     socket.on("USER_WENT_OFFLINE", (userHandle) => {
-      if (userHandle === handle) setActive(false);
+      if (userHandle === handle) {
+        setActive(false);
+      }
       Emitter.emit("USER_WENT_OFFLINE", userHandle);
     });
     return () => {
@@ -63,7 +71,9 @@ const UserCard = ({
   useEffect(() => {
     // Listening to unread message count
     Emitter.on("INCREMENT_UNREAD_COUNT", (userHandle) => {
-      if (handle === userHandle) setUnreadCount((prevState) => prevState + 1);
+      if (handle === userHandle) {
+        setUnreadCount((prevState) => prevState + 1);
+      }
     });
 
     return () => {
@@ -80,7 +90,9 @@ const UserCard = ({
       onClick={() => {
         if (isFriend) {
           setActiveFriendProfile(user);
-          if (mobileWeb) setActiveSection(2);
+          if (mobileWeb) {
+            setActiveSection(2);
+          }
         }
         setUnreadCount(0);
       }}

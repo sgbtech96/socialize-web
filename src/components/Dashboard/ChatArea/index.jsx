@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useEffect, useState, useRef } from "react";
 import { get } from "../../../utils/request";
 import ChatBubble from "./ChatBubble";
@@ -32,12 +31,16 @@ const ChatArea = ({ activeChannelId }) => {
     }
   };
   const handleIncomingMessage = (message, channelId) => {
-    if (channelId !== activeChannelId) return;
+    if (channelId !== activeChannelId) {
+      return;
+    }
     setChats((prevState) => [...prevState, message]);
     dummyDivRef.current.scrollIntoView({ behavior: "smooth" });
   };
   useEffect(() => {
-    if (!activeChannelId) return;
+    if (!activeChannelId) {
+      return;
+    }
     fetchChats();
   }, [activeChannelId]);
 

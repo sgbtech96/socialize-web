@@ -37,9 +37,13 @@ const TypingTool = ({ activeChannelId }) => {
   const socket = useContext(SocketContext);
   const [text, setText] = useState("");
   const handleMessageSend = () => {
-    if (!activeChannelId) return;
+    if (!activeChannelId) {
+      return;
+    }
     let textMessage = text.trim();
-    if (!textMessage.length) return;
+    if (!textMessage.length) {
+      return;
+    }
     socket.emit("SEND_MESSAGE", activeChannelId, textMessage);
     setText("");
   };

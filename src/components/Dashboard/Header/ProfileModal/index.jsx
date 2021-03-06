@@ -44,7 +44,9 @@ const ProfileModal = ({
   const [userImageUrl, setUserImageUrl] = useState(imageUrl);
 
   const handleUpload = (image) => {
-    if (!image) return;
+    if (!image) {
+      return;
+    }
     setUploading(true);
     const uploadTask = storage.ref(`images/${image.name}`).put(image);
     uploadTask.on(
