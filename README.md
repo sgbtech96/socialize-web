@@ -21,4 +21,4 @@ https://github.com/sgbtech96/socialize-provider
 13) Lint and prettier enabled.
 
 ### Technology Stack Used
-React, Redux, Context, Firebase, socket-io-client, react-slick, ant-design, styled-components, etc.
+React, redux, thunk, context, firebase, socket-io-client, react-slick, ant-design, styled-components, etc.
