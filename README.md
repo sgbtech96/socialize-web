@@ -24,6 +24,13 @@ https://github.com/sgbtech96/socialize-provider
 ### Technology stack used
 React, redux, thunk, context, firebase, socket-io-client, react-slick, ant-design, styled-components, etc.
 
+### Screenshots of mobile view
+
+![image](https://user-images.githubusercontent.com/43717462/110251073-cc119300-7fa4-11eb-9c88-8ee7ed3e3d3e.jpg)
+![image](https://user-images.githubusercontent.com/43717462/110251080-cf0c8380-7fa4-11eb-8ecf-fc103eb3224f.jpg)
+![image](https://user-images.githubusercontent.com/43717462/110251083-d03db080-7fa4-11eb-8172-1af92a64cf6b.jpg)
+![image](https://user-images.githubusercontent.com/43717462/110251085-d2077400-7fa4-11eb-8d5f-d680ddeddd58.jpg)
+
 ### Screenshots of desktop view
 
 ![image](https://user-images.githubusercontent.com/43717462/110250756-21e53b80-7fa3-11eb-8b9d-33be4947726f.png)
