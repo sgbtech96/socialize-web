@@ -21,8 +21,10 @@ https://github.com/sgbtech96/socialize-provider
 13) Lint and prettier enabled.
 14) Skeletons and loaders icluded.
 
-### Technology Stack Used
+### Technology stack used
 React, redux, thunk, context, firebase, socket-io-client, react-slick, ant-design, styled-components, etc.
+
+### Screenshots of desktop view
 
 ![image](https://user-images.githubusercontent.com/43717462/110250756-21e53b80-7fa3-11eb-8b9d-33be4947726f.png)
 ![image](https://user-images.githubusercontent.com/43717462/110250763-2e699400-7fa3-11eb-9504-86f107a27567.png)
