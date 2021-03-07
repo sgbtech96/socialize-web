@@ -19,6 +19,7 @@ https://github.com/sgbtech96/socialize-provider
 11) Private routes.
 12) A clean and systematic directory structure has been followed.
 13) Lint and prettier enabled.
+14) Skeletons and loaders icluded.
 
 ### Technology Stack Used
 React, redux, thunk, context, firebase, socket-io-client, react-slick, ant-design, styled-components, etc.
