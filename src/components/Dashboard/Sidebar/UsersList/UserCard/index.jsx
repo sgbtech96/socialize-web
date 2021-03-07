@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Row, Col, message } from 'antd';
-import { Wrapper } from './style';
-import Icon from 'react-icons-kit';
-import { userPlus } from 'react-icons-kit/feather/userPlus';
-import { checkCircleO } from 'react-icons-kit/fa/checkCircleO';
-import Emitter from '../../../../../utils/emitter';
-import { get } from '../../../../../utils/request';
-import { SocketContext } from '../../../../../utils/contexts/SocketContext';
-import { connect } from 'react-redux';
-import { setActiveFriendProfile } from '../../../../../actions/dashboard';
-import { setActiveSection } from '../../../../../actions/display';
+import React, { useEffect, useState, useContext } from "react";
+import { Row, Col, message } from "antd";
+import { Wrapper } from "./style";
+import Icon from "react-icons-kit";
+import { userPlus } from "react-icons-kit/feather/userPlus";
+import { checkCircleO } from "react-icons-kit/fa/checkCircleO";
+import Emitter from "../../../../../utils/emitter";
+import { get } from "../../../../../utils/request";
+import { SocketContext } from "../../../../../utils/contexts/SocketContext";
+import { connect } from "react-redux";
+import { setActiveFriendProfile } from "../../../../../actions/dashboard";
+import { setActiveSection } from "../../../../../actions/display";
 
 const UserCard = ({
   user,
@@ -26,7 +26,7 @@ const UserCard = ({
   const [active, setActive] = useState(false);
 
   const handleInviteSend = () => {
-    socket.emit('SEND_INVITE', handle);
+    socket.emit("SEND_INVITE", handle);
     setIsInviteSent(true);
     message.success(`Invite sent to ${handle}`);
   };
@@ -34,7 +34,7 @@ const UserCard = ({
   const fetchActiveStatus = async () => {
     try {
       const res = await get(`api/v1/chats/isOnline/${handle}`);
-      if (res.type === 'success') {
+      if (res.type === "success") {
         if (res.data.online) {
           setActive(true);
         }
@@ -50,34 +50,34 @@ const UserCard = ({
   }, [handle]);
 
   useEffect(() => {
-    socket.on('USER_CAME_ONLINE', (userHandle) => {
+    socket.on("USER_CAME_ONLINE", (userHandle) => {
       if (userHandle === handle) {
         setActive(true);
       }
-      Emitter.emit('USER_CAME_ONLINE', userHandle);
+      Emitter.emit("USER_CAME_ONLINE", userHandle);
     });
-    socket.on('USER_WENT_OFFLINE', (userHandle) => {
+    socket.on("USER_WENT_OFFLINE", (userHandle) => {
       if (userHandle === handle) {
         setActive(false);
       }
-      Emitter.emit('USER_WENT_OFFLINE', userHandle);
+      Emitter.emit("USER_WENT_OFFLINE", userHandle);
     });
     return () => {
-      socket.off('USER_CAME_ONLINE');
-      socket.off('USER_WENT_OFFLINE');
+      socket.off("USER_CAME_ONLINE");
+      socket.off("USER_WENT_OFFLINE");
     };
   }, []);
 
   useEffect(() => {
     // Listening to unread message count
-    Emitter.on('INCREMENT_UNREAD_COUNT', (userHandle) => {
+    Emitter.on("INCREMENT_UNREAD_COUNT", (userHandle) => {
       if (handle === userHandle) {
         setUnreadCount((prevState) => prevState + 1);
       }
     });
 
     return () => {
-      Emitter.off('INCREMENT_UNREAD_COUNT');
+      Emitter.off("INCREMENT_UNREAD_COUNT");
     };
   }, []);
 
@@ -86,7 +86,7 @@ const UserCard = ({
       align="middle"
       active={active}
       selected={channelId === activeChannelId}
-      className={`${isFriend ? 'pointer' : ''}`}
+      className={`${isFriend ? "pointer" : ""}`}
       onClick={() => {
         if (isFriend) {
           setActiveFriendProfile(user);
@@ -97,7 +97,7 @@ const UserCard = ({
         setUnreadCount(0);
       }}>
       <Col span={5} className="avatar">
-        <img src={imageUrl} />
+        <img src={imageUrl || "/avatar-placeholder.png"} alt="avatar" />
         <span className="dot"></span>
       </Col>
       <Col offset={1} span={11}>
