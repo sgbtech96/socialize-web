@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 // import PropTypes from "prop-types";
-import { Row, message } from 'antd';
-import AvatarDropdown from './AvatarDropdown';
-import Emitter from '../../../utils/emitter';
-import NotificationList from './NotificationList';
-import ProfileModal from './ProfileModal';
-import styled from 'styled-components';
-import Icon from 'react-icons-kit';
-import { ic_keyboard_arrow_left } from 'react-icons-kit/md/ic_keyboard_arrow_left';
-import { connect } from 'react-redux';
+import { Row, message } from "antd";
+import AvatarDropdown from "./AvatarDropdown";
+import Emitter from "../../../utils/emitter";
+import NotificationList from "./NotificationList";
+import ProfileModal from "./ProfileModal";
+import styled from "styled-components";
+import Icon from "react-icons-kit";
+import { ic_keyboard_arrow_left } from "react-icons-kit/md/ic_keyboard_arrow_left";
+import { connect } from "react-redux";
 import {
   fetchMyProfile,
   resetActiveFriendProfile,
-} from '../../../actions/dashboard';
-import { setActiveSection } from '../../../actions/display';
-import { get } from '../../../utils/request';
+} from "../../../actions/dashboard";
+import { setActiveSection } from "../../../actions/display";
+import { get } from "../../../utils/request";
 
 const Wrapper = styled(Row)`
   background-color: var(--white);
@@ -85,7 +85,7 @@ const Header = ({
     // console.log(activeFriend.handle);
     try {
       const res = await get(`api/v1/chats/isOnline/${activeFriend?.handle}`);
-      if (res.type === 'success') {
+      if (res.type === "success") {
         if (res.data.online) {
           setActive(true);
         }
@@ -97,24 +97,24 @@ const Header = ({
     if (!activeFriend) {
       return;
     }
-    Emitter.on('USER_CAME_ONLINE', (userHandle) => {
+    Emitter.on("USER_CAME_ONLINE", (userHandle) => {
       if (userHandle === activeFriend?.handle) {
         setActive(true);
       }
     });
-    Emitter.on('USER_WENT_OFFLINE', (userHandle) => {
+    Emitter.on("USER_WENT_OFFLINE", (userHandle) => {
       if (userHandle === activeFriend?.handle) {
         setActive(false);
       }
     });
     return () => {
-      Emitter.off('USER_CAME_ONLINE');
-      Emitter.off('USER_WENT_OFFLINE');
+      Emitter.off("USER_CAME_ONLINE");
+      Emitter.off("USER_WENT_OFFLINE");
     };
   }, [activeFriend]);
 
   useEffect(() => {
-    if (type === 'sidebar') {
+    if (type === "sidebar") {
       fetchMyProfile();
     }
   }, []);
@@ -127,10 +127,10 @@ const Header = ({
   }, [activeFriend]);
 
   useEffect(() => {
-    Emitter.on('PROFILE_EDITED', () => fetchMyProfile());
+    Emitter.on("PROFILE_EDITED", () => fetchMyProfile());
 
     return () => {
-      Emitter.off('PROFILE_EDITED');
+      Emitter.off("PROFILE_EDITED");
     };
   }, []);
 
@@ -143,7 +143,7 @@ const Header = ({
         />
       )}
       <Wrapper align="middle">
-        {type === 'chat-area' ? (
+        {type === "chat-area" ? (
           <Row className="mr-auto friend-info" align="middle">
             {mobileWeb && (
               <Icon
@@ -162,7 +162,7 @@ const Header = ({
                   className="active-user-avatar mr-10"
                   onClick={() => setIsModalVisible(true)}>
                   <img
-                    src={activeFriend.imageUrl}
+                    src={activeFriend.imageUrl || "/avatar-placeholder.png"}
                     alt="avatar"
                     height={48}
                     width={48}
@@ -173,8 +173,8 @@ const Header = ({
                     {activeFriend.name}
                   </div>
                   <span
-                    className={`mt-5 chip bold-12 ${active ? 'active' : 'offline'}`}>
-                    {active ? 'Active' : 'Offline'}
+                    className={`mt-5 chip bold-12 ${active ? "active" : "offline"}`}>
+                    {active ? "Active" : "Offline"}
                   </span>
                 </div>
               </>
@@ -188,18 +188,18 @@ const Header = ({
             <div className="bold-18">Socialize</div>
           </Row>
         )}
-        {((type === 'sidebar' && mobileWeb) ||
-          (type === 'chat-area' && !mobileWeb)) && (
+        {((type === "sidebar" && mobileWeb) ||
+          (type === "chat-area" && !mobileWeb)) && (
           <div className="bell-icon">
             <NotificationList />
           </div>
         )}
-        {((type === 'sidebar' && mobileWeb) ||
-          (type === 'chat-area' && !mobileWeb)) && (
+        {((type === "sidebar" && mobileWeb) ||
+          (type === "chat-area" && !mobileWeb)) && (
           <div>
             <AvatarDropdown>
               <img
-                src={myProfile.imageUrl || '/avatar-placeholder.webp'}
+                src={myProfile.imageUrl || "/avatar-placeholder.webp"}
                 height={44}
                 width={44}
                 className="user-avatar"
