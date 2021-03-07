@@ -26,8 +26,8 @@ React, redux, thunk, context, firebase, socket-io-client, react-slick, ant-desig
 
 ### Screenshots of mobile view
 
-![image](https://user-images.githubusercontent.com/43717462/110251479-9bcaf400-7fa6-11eb-8786-b04971d3b774.png)
 ![image](https://user-images.githubusercontent.com/43717462/110251483-9e2d4e00-7fa6-11eb-87c5-ffa90d00c037.png)
+![image](https://user-images.githubusercontent.com/43717462/110251479-9bcaf400-7fa6-11eb-8786-b04971d3b774.png)
 
 ### Screenshots of desktop view
 
